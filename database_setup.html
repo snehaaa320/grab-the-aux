@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<head>
+	<script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
+	<script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDs1juHP3-F2AazMkfw-RotpRqo-4LhVWg",
+            authDomain: "grabtheaux-47eb2.firebaseapp.com",
+            databaseURL: "https://grabtheaux-47eb2.firebaseio.com",
+            projectId: "grabtheaux-47eb2",
+            storageBucket: "grabtheaux-47eb2.appspot.com",
+            messagingSenderId: "23642747296"
+        };
+        firebase.initializeApp(config);
+        realtime_database = firebase.database();
+	</script>
+</head>
+
+<body>
+<h1>Testing </h1>
+<script>
+    // var firebaseRef = new firebase('http://grabtheaux-47eb2.firebaseio.com');
+    firebase.database..ref("/").child('.info/connected').on('value', function (connectedSnap) {
+        if (connectedSnap.val() === true) {
+            console.log("Connected to Firebase");
+        } else {
+            console.log("Not Connected to Firebase");
+        }
+    });
+
+
+</script>
+</body>
+
+</html>
