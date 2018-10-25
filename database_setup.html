@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 
 <head>
+
+</head>
+
+<body>
+<h1>Testing </h1>
+	
+	
 	<script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
 	<script>
         // Initialize Firebase
@@ -15,10 +22,8 @@
         firebase.initializeApp(config);
         realtime_database = firebase.database();
 	</script>
-</head>
-
-<body>
-<h1>Testing </h1>
+	
+	
 <script>
     // var firebaseRef = new firebase('http://grabtheaux-47eb2.firebaseio.com');
     firebase.database().ref("/").child('.info/connected').on('value', function (connectedSnap) {
@@ -31,6 +36,9 @@
 
 
 </script>
+	
+	<script src="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.css" />
 	
 	<script type="text/javascript">
       // FirebaseUI config.
