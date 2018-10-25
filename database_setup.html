@@ -21,7 +21,7 @@
 <h1>Testing </h1>
 <script>
     // var firebaseRef = new firebase('http://grabtheaux-47eb2.firebaseio.com');
-    firebase.database..ref("/").child('.info/connected').on('value', function (connectedSnap) {
+    firebase.database().ref("/").child('.info/connected').on('value', function (connectedSnap) {
         if (connectedSnap.val() === true) {
             console.log("Connected to Firebase");
         } else {
