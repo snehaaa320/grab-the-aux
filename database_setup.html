@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+<html>
 
 <head>
-	<script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
-	<script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
+    <script>
         // Initialize Firebase
         var config = {
             apiKey: "AIzaSyDs1juHP3-F2AazMkfw-RotpRqo-4LhVWg",
@@ -13,24 +14,46 @@
             messagingSenderId: "23642747296"
         };
         firebase.initializeApp(config);
-        realtime_database = firebase.database();
-	</script>
+
+    </script>
 </head>
 
 <body>
-<h1>Testing </h1>
-<script>
-    // var firebaseRef = new firebase('http://grabtheaux-47eb2.firebaseio.com');
-    firebase.database..ref("/").child('.info/connected').on('value', function (connectedSnap) {
-        if (connectedSnap.val() === true) {
-            console.log("Connected to Firebase");
-        } else {
-            console.log("Not Connected to Firebase");
+    <h1>Testing </h1>
+    <script>
+        function printValues() {
+            console.log("Values");
+            firebase.database().ref('Host_Table/Temp_Host').on('value', function(usr_details) {
+                console.log(usr_details.val());
+            }, function(error) {
+                console.log("Error : " + error.code);
+            });
+
+            firebase.database().ref('Playlist/temp_playlist').on('value', function(playlist) {
+                console.log(playlist.val());
+            }, function(error) {
+                console.log("Error : " + error.code);
+            });
+
+            firebase.database().ref('Songs/song_id').on('value', function(playlist) {
+                console.log(playlist.val());
+            }, function(error) {
+                console.log("Error : " + error.code);
+            });
+
         }
-    });
 
+        // var firebaseRef = new firebase('http://grabtheaux-47eb2.firebaseio.com');
+        firebase.database().ref("/").child('.info/connected').on('value', function(connectedSnap) {
+            if (connectedSnap.val() === true) {
+                console.log("Connected to Firebase");
+                printValues();
+            } else {
+                console.log("Not Connected to Firebase");
+            }
+        });
 
-</script>
+    </script>
 </body>
 
 </html>
