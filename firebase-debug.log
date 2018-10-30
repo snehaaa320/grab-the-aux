@@ -1,0 +1,24 @@
+[debug] [2018-10-29T23:44:06.379Z] ----------------------------------------------------------------------
+[debug] [2018-10-29T23:44:06.381Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2018-10-29T23:44:06.381Z] CLI Version:   6.0.0
+[debug] [2018-10-29T23:44:06.381Z] Platform:      darwin
+[debug] [2018-10-29T23:44:06.381Z] Node Version:  v8.12.0
+[debug] [2018-10-29T23:44:06.382Z] Time:          Mon Oct 29 2018 16:44:06 GMT-0700 (PDT)
+[debug] [2018-10-29T23:44:06.382Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-10-29T23:44:06.392Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-10-29T23:44:06.393Z] > authorizing via signed-in user
+[debug] [2018-10-29T23:44:06.393Z] [iam] checking project grabtheaux-47eb2 for permissions ["firebase.projects.get"]
+[debug] [2018-10-29T23:44:06.395Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/grabtheaux-47eb2:testIamPermissions  
+
+[debug] [2018-10-29T23:44:09.348Z] <<< HTTP RESPONSE 200
+[debug] [2018-10-29T23:44:09.349Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/grabtheaux-47eb2  
+ 
+[debug] [2018-10-29T23:44:09.611Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/sneharamesh/Downloads/firebaseWebLogin'...
+[info] 
+[debug] [2018-10-29T23:44:09.612Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/23642747296/clients/_:getWebAppConfig  
+ 
+[debug] [2018-10-29T23:44:10.230Z] <<< HTTP RESPONSE 200
+[info] ✔  hosting: Local server: http://localhost:5000
