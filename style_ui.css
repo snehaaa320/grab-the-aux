@@ -1,0 +1,41 @@
+body {
+	background-color: #323232 !important;
+}
+
+.title {
+	height: 20%;
+	padding: 10%;
+}
+
+.login {
+	padding: 10%;
+
+}
+
+.signUp {
+	padding: 10%;
+	text-align: center;
+}
+
+h1, h3{
+	color: white !important;
+	text-align: center;
+}
+
+.form-control {
+	width: 100% !important;
+	border: 1px solid red;
+	padding: 25px 12px !important;
+	margin-top: 4%;
+	margin-bottom: 4%;
+	background: black !important;
+	color: white !important;
+	border-radius: 50px;
+	text-align: center;
+
+}
+
+.btn {
+	background: black !important;
+	margin-top: 9%;
+}
