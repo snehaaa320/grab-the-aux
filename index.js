@@ -88,3 +88,26 @@ function update_view(name) {
         document.getElementById("guest_div").style.display = "block";
     }
 }
+
+function create() // Create function on 1st page
+{
+  var playlistname = prompt("Please enter a name for your playlist", "myplaylist");
+
+  if (typeof playlistname !== "undefined") {
+      firebase.database().ref('Playlist/' + playlistname).set({
+          name: name
+      });
+
+  window.location = 'playlist.html';
+}
+
+function generate_url(){
+
+    var uuid = require('node-uuid');
+    // Generate a v1 (time-based) id
+    var timeBasedID = uuid.v1(); // -> '6c84fb90-12c4-11e1-840d-7b25c5ee775a'
+    // Generate a v4 (random) id
+    var randomID = uuid.v4(); // -> '110ec58a-a0f2-4ac4-8393-c866d813b8d1'
+    var url = 'http://localhost:5000/' + randomID;  // or + timeBasedID
+    return url;
+}
