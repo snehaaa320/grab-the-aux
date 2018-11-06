@@ -1,3 +1,13 @@
+var config = {
+    apiKey: "AIzaSyDs1juHP3-F2AazMkfw-RotpRqo-4LhVWg",
+    authDomain: "grabtheaux-47eb2.firebaseapp.com",
+    databaseURL: "https://grabtheaux-47eb2.firebaseio.com",
+    projectId: "grabtheaux-47eb2",
+    storageBucket: "grabtheaux-47eb2.appspot.com",
+    messagingSenderId: "23642747296"
+};
+firebase.initializeApp(config);
+
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         // User is signed in.
@@ -97,6 +107,7 @@ function create() // Create function on 1st page
       firebase.database().ref('Playlist/' + playlistname).set({
           name: name
       });
+    }
 
   window.location = 'playlist.html';
 }
