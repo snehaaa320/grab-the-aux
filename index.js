@@ -101,10 +101,10 @@ function update_view(name) {
 
 function create() // Create function on 1st page
 {
-  var playlistname = prompt("Please enter a name for your playlist", "myplaylist");
+  var name = prompt("Please enter a name for your playlist", "myplaylist");
 
-  if (typeof playlistname !== "undefined") {
-      firebase.database().ref('Playlist/' + playlistname).set({
+  if (typeof name !== "undefined") {
+      firebase.database().ref('Playlist/' + name).set({
           name: name
       });
     }
@@ -121,4 +121,5 @@ function generate_url(){
     var randomID = uuid.v4(); // -> '110ec58a-a0f2-4ac4-8393-c866d813b8d1'
     var url = 'http://localhost:5000/' + randomID;  // or + timeBasedID
     return url;
+
 }
