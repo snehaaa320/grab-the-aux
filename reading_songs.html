@@ -38,6 +38,7 @@
             <tr>
                 <th>Song Name</th>
                 <th>Song Artists</th>
+                <th> Votes </th>
             </tr>
         </table>
     </div>
@@ -70,7 +71,15 @@
             song_artist_cell.innerHTML = song_artist;
         }
     </script>
-
+    
+    <template id="post-template">
+    	<li class="list-group-item">
+    		<i class="glyphicon glyphicon-chevron-up" @click="upvote"></i>
+    		<span class="label label-primary">{{ votes }}</span>
+    		<i class="glyphicon glyphicon-chevron-down" @click="downvote"></i>
+    		<a>{{ post.title }}</a>
+    	</li>
+    </template>
 </body>
 
 </html>

@@ -2,7 +2,8 @@
 <html>
 
 <head>
-    <style type="text/css">
+  <style type="text/css">
+
         #song_div {
             overflow: auto;
         }
@@ -38,6 +39,29 @@
         };
         firebase.initializeApp(config);
     </script>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Upvote/Downvote Functionality - Reddit-like Posting System VueJs</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="upvotes.js"></script>
+    <link rel="stylesheet" type="text/css" href="upvotes.css">
+
+
+    <script
+      type="text/javascript"
+      src="/js/lib/dummy.js"></script>
+
+      <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/vue/1.0.16/vue.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- TODO: Missing CoffeeScript 2 -->
+
 </head>
 
 <body>
@@ -47,6 +71,7 @@
             <tr>
                 <th>Song Name</th>
                 <th>Song Artists</th>
+                <th> Votes </th>
             </tr>
         </table>
     </div>
@@ -76,8 +101,10 @@
             var new_row = table.insertRow(-1);
             var song_name_cell = new_row.insertCell(0);
             var song_artist_cell = new_row.insertCell(1);
+            var upvotes= new_row.insertCell(2);
             song_name_cell.innerHTML = song_name;
             song_artist_cell.innerHTML = song_artist;
+            upvotes.innerHTML='<object type="text/html" data="upvotes.html" ></object>';;
         }
     </script>
     <div id="write_suggestion_div">
@@ -105,6 +132,7 @@
             }
         </script>
     </div>
+
 </body>
 
 </html>
