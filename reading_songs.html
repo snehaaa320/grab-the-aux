@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style type="text/css">
+        #song_table {
+            width: 100%;
+            padding: 20px;
+        }
+
+        #song_table th,
+        td {
+            padding: 15px;
+            text-align: left;
+            border: 1px solid black;
+        }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.js"></script>
+    <link href="reading_songs.css" type="text/css" rel="stylesheet">
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDs1juHP3-F2AazMkfw-RotpRqo-4LhVWg",
+            authDomain: "grabtheaux-47eb2.firebaseapp.com",
+            databaseURL: "https://grabtheaux-47eb2.firebaseio.com",
+            projectId: "grabtheaux-47eb2",
+            storageBucket: "grabtheaux-47eb2.appspot.com",
+            messagingSenderId: "23642747296"
+        };
+        firebase.initializeApp(config);
+    </script>
+</head>
+
+<body>
+    <div id="song_div">
+        <table id="song_table">
+            <tr>
+                <th>Song Name</th>
+                <th>Song Artists</th>
+            </tr>
+        </table>
+    </div>
+    <script>
+        firebase.database().ref("/").child('.info/connected').on('value', function(connectedSnap) {
+            if (connectedSnap.val() === true) {
+                console.log("Connected to Firebase");
+                getValuesFromDB();
+            } else {
+                console.log("Not Connected to Firebase");
+            }
+        });
+
+        function getValuesFromDB() {
+            firebase.database().ref('Playlist/temp_playlist/Queue/').on('value', function(queue) {
+                queue.forEach(function(song) {
+                    printToTable(song.key, song.child('Artist').val());
+                });
+            }, function(error) {
+                console.log("Error : " + error.code);
+            });
+        }
+
+        function printToTable(song_name, song_artist) {
+            table = document.getElementById('song_table');
+            var new_row = table.insertRow(-1);
+            var song_name_cell = new_row.insertCell(0);
+            var song_artist_cell = new_row.insertCell(1);
+            song_name_cell.innerHTML = song_name;
+            song_artist_cell.innerHTML = song_artist;
+        }
+    </script>
+
+</body>
+
+</html>
