@@ -41,11 +41,9 @@
 		<i class="glyphicon glyphicon-chevron-down" @click="downvote"></i>
 		<a>{{ post.title }}</a>
 	</li>
-
 </template>
 
-
-  <script>
+<script>
     // tell the embed parent frame the height of the content
     if (window.parent && window.parent.parent){
       window.parent.parent.postMessage(["resultsFrame", {
