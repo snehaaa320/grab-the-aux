@@ -10,17 +10,10 @@
   <script type="text/javascript" src="upvotes.js"></script>
   <link rel="stylesheet" type="text/css" href="upvotes.css">
 
-
-  <script
-    type="text/javascript"
-    src="/js/lib/dummy.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
-
-      <script type="text/javascript" src="https://cdn.jsdelivr.net/vue/1.0.16/vue.js"></script>
-      <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
-      <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-      <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/vue/1.0.16/vue.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <!-- TODO: Missing CoffeeScript 2 -->
 
 </head>
@@ -34,14 +27,18 @@
   </div>
 </div>
 
+
 <template id="post-template">
 	<li class="list-group-item">
-		<i class="glyphicon glyphicon-chevron-up" @click="upvote"></i>
-		<span class="label label-primary">{{ votes }}</span>
+		<i class="glyphicon glyphicon-chevron-up" @click="upvote"> </i>
+
+		<span class="label label-primary"> {{ votes }} </span>
+
 		<i class="glyphicon glyphicon-chevron-down" @click="downvote"></i>
 		<a>{{ post.title }}</a>
 	</li>
 </template>
+
 
 <script>
     // tell the embed parent frame the height of the content
@@ -51,6 +48,9 @@
         slug: "g7mu5ndz"
       }], "*")
     }
+
+    console.log(app.upvotes);
+
   </script>
 
 </body>

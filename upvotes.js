@@ -36,11 +36,11 @@ var vm = new Vue({
 el: "#app",
 data: {
   posts: [{
-      title: "vote for this song!",
       votes: 0
     }
   ]
 }
 });
+
 
 }

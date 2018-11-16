@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script type="text/javascript" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
+  <script type="text/javascript" src="spotify-web-api-js.js"></script>
+</head>
+<body>
+
+//(playlistName, userId, accessToken) are passed to this. Right now it's just hardcoded.
+<script>
+
+
+var spotifyApi = new SpotifyWebApi();
+
+spotifyApi.setAccessToken('BQCjz9BPNCnIvGJKcKgxUNegwm3DWO7_UpfZw5Hcr8Fm8Dje7E7GC_tPEDIzDQkU0A_nXltO7xHx13dayLUtNrUnnT66EWrhe49TQP84zOibp8eSpks9aCrmruvX9A1r-OiC8qyu63YTUXEU56wsd43SLxDSCmu-pXDT7sUhUWsuxJm9rw8tx8fttLbj9Qs1R4SHbBmbki-ZqHz_7kIa7sAWq-gtyohUQ2g');
+
+spotifyApi.searchTracks('Taki taki')
+  .then(function(data) {
+    console.log('Search result:', data);
+  }, function(err) {
+    console.error(err);
+  });
+
+
+</script>
+
+</body>
+</html>
