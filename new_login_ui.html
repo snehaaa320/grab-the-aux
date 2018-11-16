@@ -1,44 +1,41 @@
-<!DOCTYPE html>
 <html>
+
 <head>
-	<title>Grab the Aux</title>
-
-	<!-- Linking style.css to index.html -->
-	<link rel="stylesheet" type="text/css" href="style.css">
-
-	<!-- Linking Bootstrap CDN -->	
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	
-	<!-- Making index.html responsive to mobile and tablets -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Firebase Login</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
+    <script src="index.js"></script>
 
 </head>
+
 <body>
 
-	<div class="container">
-		<div class="row title">
-			<h1>Grab the Aux</h1>
-		</div>
-		<div class="row login">
-			<h3>Login</h3>
-			<form>
-				<div class="form-group">
-					<input class="form-control" type="email" value="example@example.com">
-					<input class="form-control" type="password" value="Enter password...">
-				</div>
-			</form>
-		</div>
-		<div class="row signUp">
-			<h3>Continue as Guest</h3>
-			<form>
-				<div class="form-group">
-					<input class="form-control" type="link" value="Enter link...">
-  					<button type="button" class="btn btn-primary">Sign Up</button>
-				</div>
-			</form>
-		</div>
-	</div>
+    <div id="login_div" class="main-div">
+        <h3>Welcome to Grab the Aux!</h3>
+        <input type="email" placeholder="Email..." id="email_field" />
+        <input type="password" placeholder="Password..." id="password_field" />
 
+        <button onclick="login()">Login </button>
+        <br />
+        <br />
+        <button onclick="anonymous_login()">Login as Guest </button>
+    </div>
+
+    <div id="guest_div" class="main-div">
+        <input type-"text" placeholder="Guest Name..." id="guest_name" />
+        <button onclick="save_guest_name(firebase.auth().currentUser.uid)">Submit</button>
+    </div>
+
+    <!-- this is what's displayed after the user has successfully logged in! -->
+
+    <div id="user_div" class="loggedin-div">
+        <h3>Welcome User</h3>
+        <p id="user_para">Welcome to Firebase web login Example. You're currently logged in.</p>
+        <p>
+        <button onclick="create()"> Create Playlist </button> </p>
+        <button onclick="logout()">Logout</button>
+    </div>
 </body>
-</html>
 
+</html>
