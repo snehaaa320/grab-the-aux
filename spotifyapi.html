@@ -15,13 +15,18 @@ var spotifyApi = new SpotifyWebApi();
 
 spotifyApi.setAccessToken('BQBHNJqjmQ_JoKmA4UMsehVRUajMEJXRq18bTMSPGzy8ygiauEkUeOgIWr8HAqbOVZ7f9A8TAZtJxNtOxA79Udfgi4PY6NRRWikrfZDjuU3m16BD7kJL8gzY5ZmQbNs7LhJD4DODDmnIh-LsNr5D1vlAgC01Gqs5AbexYE1atHePyFHC2eo1BB_jX5FYmDAOVQvDcNbUmhwvlDnP_Bap7HjxOHmCximWIfU');
 
+var d;
+
 spotifyApi.getUser('22wzuycdg3qep6pwszio7pizi')
 .then(function(data) {
   console.log('User data:', data);
-  d=data;
+  console.log(data["display_name"]);
+
 }, function(err) {
   console.error(err);
 });
+
+
 
 spotifyApi.searchTracks('Taki taki')
   .then(function(data) {
