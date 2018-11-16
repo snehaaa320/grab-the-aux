@@ -1,0 +1,83 @@
+
+
+body
+{
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+
+    margin: 0;
+    padding: 0;
+
+    background: #fff;
+}
+
+input,
+button
+{
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+}
+
+.main-div,
+.loggedin-div
+{
+    display: none;
+
+    width: 20%;
+    margin: 0 auto;
+    margin-top: 150px;
+    padding: 20px;
+}
+
+.main-div input
+{
+    display: block;
+
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 15px;
+
+    -webkit-transition: .3s;
+       -moz-transition: .3s;
+            transition: .3s;
+
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    background: #fff;
+}
+
+.main-div input:focus
+{
+    border: 1px solid #777;
+}
+
+.main-div button,
+.loggedin-div button
+{
+    display: block;
+
+    width: 100%;
+    padding: 15px;
+
+    -webkit-transition: .3s;
+       -moz-transition: .3s;
+            transition: .3s;
+
+    color: #fff;
+    border: 1px solid #5d8ffc;
+    border-radius: 5px;
+    background: #5d8ffc;
+}
+
+.main-div button:hover,
+.loggedin-div button:hover
+{
+    cursor: pointer;
+
+    color: #5d8ffc;
+    border: 1px solid #5d8ffc;
+    background: #fff;
+}
+
+
