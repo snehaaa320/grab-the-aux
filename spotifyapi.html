@@ -13,17 +13,53 @@
 
 var spotifyApi = new SpotifyWebApi();
 
-spotifyApi.setAccessToken('BQCjz9BPNCnIvGJKcKgxUNegwm3DWO7_UpfZw5Hcr8Fm8Dje7E7GC_tPEDIzDQkU0A_nXltO7xHx13dayLUtNrUnnT66EWrhe49TQP84zOibp8eSpks9aCrmruvX9A1r-OiC8qyu63YTUXEU56wsd43SLxDSCmu-pXDT7sUhUWsuxJm9rw8tx8fttLbj9Qs1R4SHbBmbki-ZqHz_7kIa7sAWq-gtyohUQ2g');
+spotifyApi.setAccessToken('BQBHNJqjmQ_JoKmA4UMsehVRUajMEJXRq18bTMSPGzy8ygiauEkUeOgIWr8HAqbOVZ7f9A8TAZtJxNtOxA79Udfgi4PY6NRRWikrfZDjuU3m16BD7kJL8gzY5ZmQbNs7LhJD4DODDmnIh-LsNr5D1vlAgC01Gqs5AbexYE1atHePyFHC2eo1BB_jX5FYmDAOVQvDcNbUmhwvlDnP_Bap7HjxOHmCximWIfU');
+
+var d;
+
+spotifyApi.getUser('22wzuycdg3qep6pwszio7pizi')
+.then(function(data) {
+  console.log('User data:', data);
+  console.log(data["display_name"]);
+
+}, function(err) {
+  console.error(err);
+});
+
+
 
 spotifyApi.searchTracks('Taki taki')
   .then(function(data) {
     console.log('Search result:', data);
+    d=data;
+  }, function(err) {
+    console.error(err);
+  });
+
+spotifyApi.getPlaylist('0KSroJaAykd1wEt16qfX0b')
+.then(function(playlist) {
+  console.log('User Playlist:', playlist);
+}, function(err) {
+  console.error(err);
+});
+
+
+spotifyApi.addTracksToPlaylist('0KSroJaAykd1wEt16qfX0b', ['spotify:track:4w8niZpiMy6qz1mntFA5uM'])
+.then(function(playlist) {
+  console.log('Track added!', playlist);
+}, function(err) {
+  console.error(err);
+});
+
+spotifyApi.getUserPlaylists('22wzuycdg3qep6pwszio7pizi')
+  .then(function(data) {
+    console.log('User playlists', data);
   }, function(err) {
     console.error(err);
   });
 
 
 </script>
-
 </body>
+
 </html>
