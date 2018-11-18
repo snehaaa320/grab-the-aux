@@ -2,64 +2,51 @@
 <html>
 
 <head>
+  <meta charset="UTF-8"/>
+  <!-- <script type="text/javascript" src="spotifyapi.js"></script> -->
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
   <script type="text/javascript" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
   <script type="text/javascript" src="spotify-web-api-js.js"></script>
+  <script type="text/javascript" src="search.js"></script>
+
 </head>
 <body>
 
-//(playlistName, userId, accessToken) are passed to this. Right now it's just hardcoded.
-<script>
+  <form autocomplete="off" accept-charset=utf-8>
+    <h1> search bar in progress. </h1>
 
+    <div class="autocomplete" style="width:300px;">
+    <input id="mysong" type="search" name="mysong" placeholder="Songs" value="hello">
+  </div>
 
-var spotifyApi = new SpotifyWebApi();
+  <script>
+  var songs = ["Taki Taki - DJ Snake", "Happier - Bastille, Marshmello", "I Like Me Better -Lauv", "Party In The USA- Miley Cyrus"]
+  autocomplete(document.getElementById("mysong"), songs);
 
-spotifyApi.setAccessToken('BQBHNJqjmQ_JoKmA4UMsehVRUajMEJXRq18bTMSPGzy8ygiauEkUeOgIWr8HAqbOVZ7f9A8TAZtJxNtOxA79Udfgi4PY6NRRWikrfZDjuU3m16BD7kJL8gzY5ZmQbNs7LhJD4DODDmnIh-LsNr5D1vlAgC01Gqs5AbexYE1atHePyFHC2eo1BB_jX5FYmDAOVQvDcNbUmhwvlDnP_Bap7HjxOHmCximWIfU');
+    //var song = prompt("Please enter a song", "song goes here");
+  function start() {
+    var spotifyApi = new SpotifyWebApi();
 
-var d;
+    spotifyApi.setAccessToken('BQAnLa0tf4Fx48VyNl8LqGxR5bZtwhZJGAXZSvSiupsuq0DOZWCaHLtHbRSFqS9iRYYzLVhiADy5ThxXN-smZn7qNKBt6CPmYmNZ0ixqgXFaACQ9vxCsQ_poA4JE-T5CXsydRv34Ykl_6ZLvL3cIUetcX20Z2o2pETIgbL1xvWIwz_eXffNBhGCUjRysSHt-UqXJhtANff89Eu2UVtkr75Qx0CHQNf0A0uM');
+    var d;
 
-spotifyApi.getUser('22wzuycdg3qep6pwszio7pizi')
-.then(function(data) {
-  console.log('User data:', data);
-  console.log(data["display_name"]);
+    var s=document.getElementById("mysong").value;
 
-}, function(err) {
-  console.error(err);
-});
+    spotifyApi.searchTracks(s)
+        .then(function(data) {
+          console.log('Search result:', data);
+          d=data;
+        }, function(err) {
+          console.error(err);
+        });
+      }
+  </script>
 
+</form>
 
+<button type="submit" onclick="start()"> Search for a Song </button>
 
-spotifyApi.searchTracks('Taki taki')
-  .then(function(data) {
-    console.log('Search result:', data);
-    d=data;
-  }, function(err) {
-    console.error(err);
-  });
-
-spotifyApi.getPlaylist('0KSroJaAykd1wEt16qfX0b')
-.then(function(playlist) {
-  console.log('User Playlist:', playlist);
-}, function(err) {
-  console.error(err);
-});
-
-
-spotifyApi.addTracksToPlaylist('0KSroJaAykd1wEt16qfX0b', ['spotify:track:4w8niZpiMy6qz1mntFA5uM'])
-.then(function(playlist) {
-  console.log('Track added!', playlist);
-}, function(err) {
-  console.error(err);
-});
-
-spotifyApi.getUserPlaylists('22wzuycdg3qep6pwszio7pizi')
-  .then(function(data) {
-    console.log('User playlists', data);
-  }, function(err) {
-    console.error(err);
-  });
-
-
-</script>
 </body>
 
 </html>
