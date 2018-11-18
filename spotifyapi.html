@@ -18,7 +18,7 @@
 
     <div class="autocomplete" style="width:300px;">
     <input id="mysong" type="search" name="mysong" placeholder="Songs" value="hello">
-  </div>
+    </div>
 
   <script>
   var songs = ["Taki Taki - DJ Snake", "Happier - Bastille, Marshmello", "I Like Me Better -Lauv", "Party In The USA- Miley Cyrus"]
@@ -29,8 +29,6 @@
     var spotifyApi = new SpotifyWebApi();
 
     spotifyApi.setAccessToken('BQAnLa0tf4Fx48VyNl8LqGxR5bZtwhZJGAXZSvSiupsuq0DOZWCaHLtHbRSFqS9iRYYzLVhiADy5ThxXN-smZn7qNKBt6CPmYmNZ0ixqgXFaACQ9vxCsQ_poA4JE-T5CXsydRv34Ykl_6ZLvL3cIUetcX20Z2o2pETIgbL1xvWIwz_eXffNBhGCUjRysSHt-UqXJhtANff89Eu2UVtkr75Qx0CHQNf0A0uM');
-    var d;
-
     var s=document.getElementById("mysong").value;
 
     spotifyApi.searchTracks(s)
@@ -40,12 +38,14 @@
         }, function(err) {
           console.error(err);
         });
+      document.getElementById('success').innerHTML = s+ " is a valid Spotify track and can be added to the playlist!";
+
       }
   </script>
-
 </form>
 
 <button type="submit" onclick="start()"> Search for a Song </button>
+<div id="success"> </div>
 
 </body>
 
