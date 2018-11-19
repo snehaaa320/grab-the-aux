@@ -2,64 +2,101 @@
 <html>
 
 <head>
+  <meta charset="UTF-8"/>
+  <!-- <script type="text/javascript" src="spotifyapi.js"></script> -->
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
   <script type="text/javascript" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
   <script type="text/javascript" src="spotify-web-api-js.js"></script>
+  <script type="text/javascript" src="search.js"></script>
+
 </head>
 <body>
 
-//(playlistName, userId, accessToken) are passed to this. Right now it's just hardcoded.
-<script>
+  <form autocomplete="off" accept-charset=utf-8>
+    <h1> search bar in progress. </h1>
 
+    <div class="autocomplete" style="width:300px;">
+    <input id="mysong" type="search" name="mysong" placeholder="Songs" value="hello">
+    </div>
 
-var spotifyApi = new SpotifyWebApi();
+  <script>
+  //token hard coded right now. when we get authorization working it will be passed into the functions
 
-spotifyApi.setAccessToken('BQBHNJqjmQ_JoKmA4UMsehVRUajMEJXRq18bTMSPGzy8ygiauEkUeOgIWr8HAqbOVZ7f9A8TAZtJxNtOxA79Udfgi4PY6NRRWikrfZDjuU3m16BD7kJL8gzY5ZmQbNs7LhJD4DODDmnIh-LsNr5D1vlAgC01Gqs5AbexYE1atHePyFHC2eo1BB_jX5FYmDAOVQvDcNbUmhwvlDnP_Bap7HjxOHmCximWIfU');
+  var token='BQC28yY_MqGt2sdiFPcpA6kklh1RR0O4cYn9Y5EIV2Kcs3fOTrc7mf8p-3U-8uassTYwl1Zve1g3UFRZIatzbsICw3C6ftWOXaKOLM8j4dzWkyh-hULz-8Tu_Panzh_uqM-R9gx9kx7YCV9UZ-sB5eNjNiU9krOoHRofL_-6phtrwAZ21r0etMiHiTR-743VNcqmo6U6IM1Vp1uEym5GZPrU6sqCuVlg91Y';
+  var songs = ["Taki Taki - DJ Snake", "Happier - Bastille, Marshmello", "I Like Me Better -Lauv", "Party In The USA- Miley Cyrus"]
+  autocomplete(document.getElementById("mysong"), songs);
 
-var d;
+    //var song = prompt("Please enter a song", "song goes here");
+  function start(token) {
+    var spotifyApi = new SpotifyWebApi();
+    spotifyApi.setAccessToken(token);
+    var s=document.getElementById("mysong").value;
 
-spotifyApi.getUser('22wzuycdg3qep6pwszio7pizi')
-.then(function(data) {
-  console.log('User data:', data);
-  console.log(data["display_name"]);
+    spotifyApi.getUser('22wzuycdg3qep6pwszio7pizi')
+    .then(function(data) {
+      console.log('User data:', data);
+      console.log(data["display_name"]);
+    }, function(err) {
+      console.error(err);
+    });
 
-}, function(err) {
-  console.error(err);
-});
+    var tracks=[];
+    //display top 10 tracks
+    spotifyApi.searchTracks(s)
+        .then(function(data) {
+          console.log('Search result:', data);
+          console.log(data["tracks"]["items"][0]["name"]);
+          console.log(data["tracks"]["items"][0]["artists"][0]["name"]);
+          console.log(data["tracks"]["items"][0]["uri"]);
 
+          var uri=data["tracks"]["items"][0]["uri"];
 
+          var map={};
 
-spotifyApi.searchTracks('Taki taki')
-  .then(function(data) {
-    console.log('Search result:', data);
-    d=data;
-  }, function(err) {
-    console.error(err);
-  });
+          for(var i=0; i < 3; i++){
+            tracks.push(data["tracks"]["items"][i]["uri"]);
 
-spotifyApi.getPlaylist('0KSroJaAykd1wEt16qfX0b')
-.then(function(playlist) {
-  console.log('User Playlist:', playlist);
-}, function(err) {
-  console.error(err);
-});
+            if(data["tracks"]["items"][i]["artists"][0]["name"]== 'null')
+              break;
 
+            map[tracks[i]]=data["tracks"]["items"][i]["name"] + "-" + data["tracks"]["items"][i]["artists"][0]["name"];
+          }
 
-spotifyApi.addTracksToPlaylist('0KSroJaAykd1wEt16qfX0b', ['spotify:track:4w8niZpiMy6qz1mntFA5uM'])
-.then(function(playlist) {
-  console.log('Track added!', playlist);
-}, function(err) {
-  console.error(err);
-});
+          document.getElementById('tracks').innerHTML= "<h3> Search Results: </h3>";
 
-spotifyApi.getUserPlaylists('22wzuycdg3qep6pwszio7pizi')
-  .then(function(data) {
-    console.log('User playlists', data);
-  }, function(err) {
-    console.error(err);
-  });
+          for (i = 0; i < tracks.length; i++) {
+            document.getElementById('tracks').innerHTML +=  map[tracks[i]] + "<button id = 'btn' + i> Add to playlist </button><br>";
+          }
 
+          addToPlaylist(tracks, token);
 
-</script>
+        }, function(err) {
+          console.error(err);
+        });
+
+      document.getElementById('success').innerHTML = "Your search contains valid Spotify track(s) that can be added to the playlist!";
+    }
+
+    function addToPlaylist(song, token){
+      var spotifyApi = new SpotifyWebApi();
+      spotifyApi.setAccessToken(token);
+
+      spotifyApi.addTracksToPlaylist('7yeCMcSsBT7gUBM0YYp4oV', song)
+      .then(function(playlist) {
+        console.log('Track added!', playlist);
+      }, function(err) {
+        console.error(err);
+      });
+    }
+  </script>
+
+</form>
+
+<button type="submit" onclick="start(token)"> Search for a Song </button>
+<div id="success"> </div>
+<div id="tracks"> </div>
+
 </body>
 
 </html>
