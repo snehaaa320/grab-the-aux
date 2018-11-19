@@ -21,27 +21,30 @@ firebase.database().ref("/").child('.info/connected').on('value', function (conn
 });
 
 function getValuesFromDB() {
-    firebase.database().ref('Playlist/temp_playlist/Queue/').on('value', function (queue) {
+    var queueRef = firebase.database().ref('Playlist/temp_playlist/Queue/').orderByChild('queue_num');
+    queueRef.on('value', function (queue) {
         num_of_songs = queue.numChildren() + 1;
         console.log(num_of_songs);
         queue.forEach(function (song) {
-            printToTable(song.key, song.child('Artist').val(), song.child('Upvotes').val());
+            printToTable(song.child('queue_num').val(), song.key, song.child('Artist').val(), song.child('Upvotes').val());
         });
     }, function (error) {
         console.log("Error : " + error.code);
     });
 }
 
-function printToTable(song_name, song_artist, currentVote) {
+function printToTable(queue_num, song_name, song_artist, currentVote) {
     console.log(song_name + ' ' + song_artist + ' ' + currentVote);
     var table = document.getElementById('song_table');
     if (table.rows.length == num_of_songs) {
         table.deleteRow(1);
     }
     var new_row = table.insertRow(-1);
-    var song_name_cell = new_row.insertCell(0);
-    var song_artist_cell = new_row.insertCell(1);
-    var upvotes = new_row.insertCell(2);
+    var queue_cell = new_row.insertCell(0);
+    var song_name_cell = new_row.insertCell(1);
+    var song_artist_cell = new_row.insertCell(2);
+    var upvotes = new_row.insertCell(3);
+    queue_cell.innerHTML = queue_num;
     song_name_cell.innerHTML = song_name;
     song_artist_cell.innerHTML = song_artist;
     upvotes.innerHTML = '<img src="upvote.png" alt="Up Vote" height="20px" onclick="update_vote_count(\'' + song_name + '\',' + (currentVote + 1) + ', 1)"/> &nbsp;' + currentVote;
@@ -55,7 +58,8 @@ function writeToDB() {
     var song_artist = document.getElementById("song_artist").value;
     firebase.database().ref('Playlist/temp_playlist/Queue/' + song_name).set({
         Artist: song_artist,
-        Upvotes: 0
+        Upvotes: 0,
+        queue_num: num_of_songs-1,
     });
 
 }
@@ -74,7 +78,7 @@ function update_vote_count(song_name, new_vote, upvote) {
             previously_voted[song_name + temp_variable] = false;
             new_vote = new_vote-1;
         }
-        
+
         update['Playlist/temp_playlist/Queue/' + song_name + '/Upvotes'] = new_vote;
     }
     if (upvote == 1) {
@@ -86,6 +90,6 @@ function update_vote_count(song_name, new_vote, upvote) {
         }
         update['Playlist/temp_playlist/Queue/' + song_name + '/Upvotes'] = new_vote;
     }
-    
+
     return firebase.database().ref().update(update);
 }
