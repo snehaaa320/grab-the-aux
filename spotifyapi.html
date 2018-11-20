@@ -23,8 +23,12 @@
   <script>
   //token hard coded right now. when we get authorization working it will be passed into the functions
 
-  var token='BQC28yY_MqGt2sdiFPcpA6kklh1RR0O4cYn9Y5EIV2Kcs3fOTrc7mf8p-3U-8uassTYwl1Zve1g3UFRZIatzbsICw3C6ftWOXaKOLM8j4dzWkyh-hULz-8Tu_Panzh_uqM-R9gx9kx7YCV9UZ-sB5eNjNiU9krOoHRofL_-6phtrwAZ21r0etMiHiTR-743VNcqmo6U6IM1Vp1uEym5GZPrU6sqCuVlg91Y';
-  var songs = ["Taki Taki - DJ Snake", "Happier - Bastille, Marshmello", "I Like Me Better -Lauv", "Party In The USA- Miley Cyrus"]
+  var token='BQDKhkhX845cDjg8fx-DpNgcRzX6lR6DNM4JvLOwz6GyvCyWWlt4M17HFW4Z02XqOutqnPnDMjK8-lSm0qvFpraz0yXtABuvhVoalgaNtCaMFnSoyi9alHcDMak4KrErdQzbvIbGuZEYEtxH3thgUc0drwfyaSY4iKfTAPCECTDgCL9kkgOXNRILzrpHOEL6HpBK97G0Ppi5pBGhGfW4ub9DbJlr0UcBBaM';
+  var playlistid='7qJCpxOofNiYv0iUbqR4D0';
+  var user_uri='22wzuycdg3qep6pwszio7pizi';
+  var tracks=[];
+  var song=[]
+  var songs = ["Taki Taki - DJ Snake", "Happier - Bastille, Marshmello", "I Like Me Better -Lauv", "Party In The USA- Miley Cyrus", "Wonderwall- Oasis", "Mr. Brightside- The Killers"]
   autocomplete(document.getElementById("mysong"), songs);
 
     //var song = prompt("Please enter a song", "song goes here");
@@ -33,7 +37,7 @@
     spotifyApi.setAccessToken(token);
     var s=document.getElementById("mysong").value;
 
-    spotifyApi.getUser('22wzuycdg3qep6pwszio7pizi')
+    spotifyApi.getUser(user_uri)
     .then(function(data) {
       console.log('User data:', data);
       console.log(data["display_name"]);
@@ -41,7 +45,7 @@
       console.error(err);
     });
 
-    var tracks=[];
+
     //display top 10 tracks
     spotifyApi.searchTracks(s)
         .then(function(data) {
@@ -53,9 +57,11 @@
           var uri=data["tracks"]["items"][0]["uri"];
 
           var map={};
+          song.push(uri);
 
           for(var i=0; i < 3; i++){
             tracks.push(data["tracks"]["items"][i]["uri"]);
+            var current=data["tracks"]["items"][i]["artists"][0]["name"];
 
             if(data["tracks"]["items"][i]["artists"][0]["name"]== 'null')
               break;
@@ -65,38 +71,51 @@
 
           document.getElementById('tracks').innerHTML= "<h3> Search Results: </h3>";
 
-          for (i = 0; i < tracks.length; i++) {
-            document.getElementById('tracks').innerHTML +=  map[tracks[i]] + "<button id = 'btn' + i> Add to playlist </button><br>";
+          for (i = 0; i < 3; i++) {
+            document.getElementById('tracks').innerHTML +=  map[tracks[i]] + "<br>";
           }
-
-          addToPlaylist(tracks, token);
+          document.getElementById('success').innerHTML = "Your search contains valid Spotify track(s) that can be added to the playlist!";
 
         }, function(err) {
           console.error(err);
         });
 
-      document.getElementById('success').innerHTML = "Your search contains valid Spotify track(s) that can be added to the playlist!";
     }
 
     function addToPlaylist(song, token){
       var spotifyApi = new SpotifyWebApi();
       spotifyApi.setAccessToken(token);
 
-      spotifyApi.addTracksToPlaylist('7yeCMcSsBT7gUBM0YYp4oV', song)
+      spotifyApi.addTracksToPlaylist(playlistid, song)
       .then(function(playlist) {
         console.log('Track added!', playlist);
       }, function(err) {
         console.error(err);
       });
     }
+
   </script>
 
 </form>
 
 <button type="submit" onclick="start(token)"> Search for a Song </button>
 <div id="success"> </div>
-<div id="tracks"> </div>
+<div id="tracks">
+</div>
+<button type="submit" onclick="addToPlaylist(song, token)"> Add to playlist </button>
+<p> </p>
 
-</body>
+
+
+<script>
+
+window.onload=function{
+    document.getElementById("iframeurl").src =
+              "https://open.spotify.com/embed/user/22wzuycdg3qep6pwszio7pizi/playlist/7qJCpxOofNiYv0iUbqR4D0";
+}
+
+</script>
+
+<iframe id="iframurl" scrolling="yes" height="350" width ="350" src="https://open.spotify.com/embed/user/22wzuycdg3qep6pwszio7pizi/playlist/7qJCpxOofNiYv0iUbqR4D0"></iframe>
 
 </html>
