@@ -23,11 +23,12 @@
   <script>
   //token hard coded right now. when we get authorization working it will be passed into the functions
 
-  var token='BQDKhkhX845cDjg8fx-DpNgcRzX6lR6DNM4JvLOwz6GyvCyWWlt4M17HFW4Z02XqOutqnPnDMjK8-lSm0qvFpraz0yXtABuvhVoalgaNtCaMFnSoyi9alHcDMak4KrErdQzbvIbGuZEYEtxH3thgUc0drwfyaSY4iKfTAPCECTDgCL9kkgOXNRILzrpHOEL6HpBK97G0Ppi5pBGhGfW4ub9DbJlr0UcBBaM';
+  var token='BQDrJkUtIW5N_1Zab507rq27sSF3AvILRi9ol77uchBG7v-M3nQPm4KO0kUeGISaVxBcH2Sz_wvLL7Ya3440RkxtYBr44iM3aXlkfg3fwEpuV7wIHT2VLUA0GzV9eDL5l_u_-iH8baxNf3np7XbePGFF70rrn73TzcBQzlbMkmOrjQWcVeQHdRSdiBg8MShXjJpjsHgSdgkO-VDvE-Y8eo3tGj9IvRSKBVk';
   var playlistid='7qJCpxOofNiYv0iUbqR4D0';
   var user_uri='22wzuycdg3qep6pwszio7pizi';
   var tracks=[];
   var song=[]
+  var user="user";
   var songs = ["Taki Taki - DJ Snake", "Happier - Bastille, Marshmello", "I Like Me Better -Lauv", "Party In The USA- Miley Cyrus", "Wonderwall- Oasis", "Mr. Brightside- The Killers"]
   autocomplete(document.getElementById("mysong"), songs);
 
@@ -40,10 +41,12 @@
     spotifyApi.getUser(user_uri)
     .then(function(data) {
       console.log('User data:', data);
+      user=data["display_name"];
       console.log(data["display_name"]);
     }, function(err) {
       console.error(err);
     });
+
 
 
     //display top 10 tracks
@@ -97,24 +100,13 @@
   </script>
 
 </form>
-
 <button type="submit" onclick="start(token)"> Search for a Song </button>
 <div id="success"> </div>
 <div id="tracks">
 </div>
 <button type="submit" onclick="addToPlaylist(song, token)"> Add to playlist </button>
 <p> </p>
-
-
-
-<script>
-
-window.onload=function{
-    document.getElementById("iframeurl").src =
-              "https://open.spotify.com/embed/user/22wzuycdg3qep6pwszio7pizi/playlist/7qJCpxOofNiYv0iUbqR4D0";
-}
-
-</script>
+<div id="welcome"> </div>
 
 <iframe id="iframurl" scrolling="yes" height="350" width ="350" src="https://open.spotify.com/embed/user/22wzuycdg3qep6pwszio7pizi/playlist/7qJCpxOofNiYv0iUbqR4D0"></iframe>
 
