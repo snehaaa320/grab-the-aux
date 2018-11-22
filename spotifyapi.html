@@ -14,7 +14,7 @@
 <body>
 
   <form autocomplete="off" accept-charset=utf-8>
-    <h1> search bar in progress. </h1>
+    <h1> search bar in progress.</h1>
 
     <div class="autocomplete" style="width:300px;">
     <input id="mysong" type="search" name="mysong" placeholder="Songs" value="hello">
@@ -23,8 +23,8 @@
   <script>
   //token hard coded right now. when we get authorization working it will be passed into the functions
 
-  var token='BQDrJkUtIW5N_1Zab507rq27sSF3AvILRi9ol77uchBG7v-M3nQPm4KO0kUeGISaVxBcH2Sz_wvLL7Ya3440RkxtYBr44iM3aXlkfg3fwEpuV7wIHT2VLUA0GzV9eDL5l_u_-iH8baxNf3np7XbePGFF70rrn73TzcBQzlbMkmOrjQWcVeQHdRSdiBg8MShXjJpjsHgSdgkO-VDvE-Y8eo3tGj9IvRSKBVk';
-  var playlistid='7qJCpxOofNiYv0iUbqR4D0';
+  var token='BQDKeuc4LjpVOr8XSwQS9-wpCtzCWiEIe-XcpLFGZnsWnKD9rwDz0WfhIkSAKJzzFQ_nw8bqtnMkyTOn4qpFlP9L6hp51I0_LggeMI2UfyCRmT0d_UKZLg5YZi2EIU-g3rfbWMa5-vDmSfpXjvMLuHCi4Dm1AfQXtxwXL3K49jtGQZunW_98gB9hpQbo_mVo7tsIPbtpVlTKdTBuMdraDIFeB0rY-jlP6tlRLA';
+  var playlistid='2ysn3h0Vmkb4sqmCDyCgqO';
   var user_uri='22wzuycdg3qep6pwszio7pizi';
   var tracks=[];
   var song=[]
@@ -62,7 +62,7 @@
           var map={};
           song.push(uri);
 
-          for(var i=0; i < 3; i++){
+          for(var i=0; i < 5; i++){
             tracks.push(data["tracks"]["items"][i]["uri"]);
             var current=data["tracks"]["items"][i]["artists"][0]["name"];
 
@@ -74,7 +74,7 @@
 
           document.getElementById('tracks').innerHTML= "<h3> Search Results: </h3>";
 
-          for (i = 0; i < 3; i++) {
+          for (i = 0; i < 5; i++) {
             document.getElementById('tracks').innerHTML +=  map[tracks[i]] + "<br>";
           }
           document.getElementById('success').innerHTML = "Your search contains valid Spotify track(s) that can be added to the playlist!";
@@ -106,8 +106,20 @@
 </div>
 <button type="submit" onclick="addToPlaylist(song, token)"> Add to playlist </button>
 <p> </p>
+
+<script>
+setInterval(function() {
+$("#reloadContent").load(location.href+" #reloadContent>*","");
+}, 200000);
+</script>
+
 <div id="welcome"> </div>
 
-<iframe id="iframurl" scrolling="yes" height="350" width ="350" src="https://open.spotify.com/embed/user/22wzuycdg3qep6pwszio7pizi/playlist/7qJCpxOofNiYv0iUbqR4D0"></iframe>
 
+<div id="if"> <iframe id="playlist_iframe" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe> </div>
+<script>
+  var playlist_iframe = document.getElementById('playlist_iframe');
+  playlist_iframe.src="https://open.spotify.com/embed/user/" + user_uri + "/playlist/"+playlistid;
+  document.getElementById('playlist_iframe') = playlist_iframe;
+</script>
 </html>
