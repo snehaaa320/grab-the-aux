@@ -23,12 +23,13 @@
   <script>
   //token hard coded right now. when we get authorization working it will be passed into the functions
 
-  var token='BQDrJkUtIW5N_1Zab507rq27sSF3AvILRi9ol77uchBG7v-M3nQPm4KO0kUeGISaVxBcH2Sz_wvLL7Ya3440RkxtYBr44iM3aXlkfg3fwEpuV7wIHT2VLUA0GzV9eDL5l_u_-iH8baxNf3np7XbePGFF70rrn73TzcBQzlbMkmOrjQWcVeQHdRSdiBg8MShXjJpjsHgSdgkO-VDvE-Y8eo3tGj9IvRSKBVk';
+  var token='BQCOq5GlsKy1tzdVJIAexrmWAzCP1JywHVOgv9LhOVHydNiHVT1wqWMTXe8NMoSBCaBqUCrE1rYezjDIkPAkSzRO3poG7b93R2KiHCyjNxDgI-r8GwUdLbjvex2PGQ04HSLTDQ_nCf_0Q7VRw_xh8EAFDmVc4k_FUbKc9gqz4wxjbGUmrWU__XaagtbImLKe2V0TnvFqezhN7c-nY0oF_9cSNWwkjzkxPBPKKlzRlVFPLtl4eJpbfu1aIqYnMftmaEMtk2no39wOuQ';
   var playlistid='7qJCpxOofNiYv0iUbqR4D0';
   var user_uri='22wzuycdg3qep6pwszio7pizi';
   var tracks=[];
   var song=[]
   var user="user";
+  var user_id="aatgod";
   var songs = ["Taki Taki - DJ Snake", "Happier - Bastille, Marshmello", "I Like Me Better -Lauv", "Party In The USA- Miley Cyrus", "Wonderwall- Oasis", "Mr. Brightside- The Killers"]
   autocomplete(document.getElementById("mysong"), songs);
 
@@ -96,7 +97,19 @@
         console.error(err);
       });
     }
-
+	
+	function getUserPlaylists(userId, options, callback) {
+		var spotifyApi = new SpotifyWebApi();
+		spotifyApi.setAccessToken('<here_your_access_token>');
+		spotifyApi.getUserPlaylists()  // note that we don't pass a user id
+		  .then(function(data) {
+			console.log('User playlists', data);
+		  }, function(err) {
+			console.error(err);
+		  });
+	}
+	
+	
   </script>
 
 </form>
@@ -105,6 +118,10 @@
 <div id="tracks">
 </div>
 <button type="submit" onclick="addToPlaylist(song, token)"> Add to playlist </button>
+
+<button type="submit" onclick="getUserPlaylists(user_id) " > Search for user's playlists </button>
+
+
 <p> </p>
 <div id="welcome"> </div>
 
