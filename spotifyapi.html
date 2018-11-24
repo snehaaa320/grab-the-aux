@@ -22,7 +22,7 @@
 
   <script>
   //token hard coded right now. when we get authorization working it will be passed into the functions
-  var token='BQAqsi1qdJfFuFfYQyq8CTlu1LGNFMFXIv4M5CWzu0FxyjDaxCWUNPp6-m22f-_zDFmItW9xhV-QeUQn1C_Z_-KA3cVr_0iyexjra3ygr9m0DNujC88A6CcMKv1pV63qtw67DZAi53wkZxlTsvhlfbOYfu7b0OML9CxuxhW9-Uv0FAfkOSuJfoy-knGWkzwVBTIqW3t4uJlJPM-t0xemntHWFH-imV3UkqqAlQ';
+  var token='BQBbVAIeze7SxXxH1-e80iVmx0ktlMOKFf6lgFYKo6OT6feycju2-UaA1jCXHXBgnqsNUWbxAMBrqAIWMmeHJyg8z6M-HChKMQZ94EFco27pHHXVdib1JNYSrAOqklA-dr5lrBaOwJBQWUQgRxbUzaiN8RBh9iOZN50y49AIEMIFiKSMqm6rhpl3IjrViP1IL7ggo3jbujuQmFTZPWu6JP39PG0TVAnmcEu2wHRUG23fO13wyy6Wdi4ntvoFajOCiF54HAtJldZQj_gZYRCPzv-chwUV3uoHUVss28w';
   var playlistid='2ysn3h0Vmkb4sqmCDyCgqO';
   var user_uri='22wzuycdg3qep6pwszio7pizi';
   var tracks=[];
@@ -97,19 +97,6 @@
       });
     }
 
-  function getUserPlaylists() {
-
-    var spotifyApi = new SpotifyWebApi();
-    spotifyApi.setAccessToken(token);
-
-    spotifyApi.getUserPlaylists()  // note that we don't pass a user id
-      .then(function(data) {
-      console.log('User playlists', data);
-      }, function(err) {
-      console.error(err);
-      });
-  }
-
   </script>
 
 </form>
@@ -121,8 +108,6 @@
 
 <button type="submit" onclick="getUserPlaylists() " > Search for user's playlists </button>
 
-
-<p> </p>
 
 <script>
 setInterval(function() {
