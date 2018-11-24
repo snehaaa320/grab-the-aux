@@ -96,13 +96,22 @@ function create() {
 
   var spotifyApi = new SpotifyWebApi();
   spotifyApi.setAccessToken(token);
+  var name={
+  "name": "New Playlist",
+  "description": "New playlist description",
+  "public": true
+  }
+  spotifyApi.createPlaylist(name)
+  .then(function(new_playlist) {
+    console.log('Playlist Created!', new_playlist);
+    selected_playlist=new_playlist["uri"];
+    console.log(new_playlist["uri"]); 
 
-  spotifyApi.createPlaylist("name")
-  .then(function(playlist) {
-    console.log('Track added!', playlist);
   }, function(err) {
     console.error(err);
   });
+
+return selected_playlist;
 
 }
     </script>
