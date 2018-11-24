@@ -9,10 +9,10 @@
   <script type="text/javascript" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
   <script type="text/javascript" src="spotify-web-api-js.js"></script>
   <script type="text/javascript" src="search.js"></script>
+  <script type="text/javascript" src="spotifyapi.js"></script>
 
 </head>
 <body>
-
   <form autocomplete="off" accept-charset=utf-8>
     <h1> search bar in progress.</h1>
 
@@ -22,13 +22,13 @@
 
   <script>
   //token hard coded right now. when we get authorization working it will be passed into the functions
-
-  var token='BQDKeuc4LjpVOr8XSwQS9-wpCtzCWiEIe-XcpLFGZnsWnKD9rwDz0WfhIkSAKJzzFQ_nw8bqtnMkyTOn4qpFlP9L6hp51I0_LggeMI2UfyCRmT0d_UKZLg5YZi2EIU-g3rfbWMa5-vDmSfpXjvMLuHCi4Dm1AfQXtxwXL3K49jtGQZunW_98gB9hpQbo_mVo7tsIPbtpVlTKdTBuMdraDIFeB0rY-jlP6tlRLA';
+  var token='BQAqsi1qdJfFuFfYQyq8CTlu1LGNFMFXIv4M5CWzu0FxyjDaxCWUNPp6-m22f-_zDFmItW9xhV-QeUQn1C_Z_-KA3cVr_0iyexjra3ygr9m0DNujC88A6CcMKv1pV63qtw67DZAi53wkZxlTsvhlfbOYfu7b0OML9CxuxhW9-Uv0FAfkOSuJfoy-knGWkzwVBTIqW3t4uJlJPM-t0xemntHWFH-imV3UkqqAlQ';
   var playlistid='2ysn3h0Vmkb4sqmCDyCgqO';
   var user_uri='22wzuycdg3qep6pwszio7pizi';
   var tracks=[];
   var song=[]
   var user="user";
+  var user_id="aatgod";
   var songs = ["Taki Taki - DJ Snake", "Happier - Bastille, Marshmello", "I Like Me Better -Lauv", "Party In The USA- Miley Cyrus", "Wonderwall- Oasis", "Mr. Brightside- The Killers"]
   autocomplete(document.getElementById("mysong"), songs);
 
@@ -97,6 +97,19 @@
       });
     }
 
+  function getUserPlaylists() {
+
+    var spotifyApi = new SpotifyWebApi();
+    spotifyApi.setAccessToken(token);
+
+    spotifyApi.getUserPlaylists()  // note that we don't pass a user id
+      .then(function(data) {
+      console.log('User playlists', data);
+      }, function(err) {
+      console.error(err);
+      });
+  }
+
   </script>
 
 </form>
@@ -105,6 +118,10 @@
 <div id="tracks">
 </div>
 <button type="submit" onclick="addToPlaylist(song, token)"> Add to playlist </button>
+
+<button type="submit" onclick="getUserPlaylists() " > Search for user's playlists </button>
+
+
 <p> </p>
 
 <script>
@@ -118,8 +135,9 @@ $("#reloadContent").load(location.href+" #reloadContent>*","");
 
 <div id="if"> <iframe id="playlist_iframe" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe> </div>
 <script>
-  var playlist_iframe = document.getElementById('playlist_iframe');
-  playlist_iframe.src="https://open.spotify.com/embed/user/" + user_uri + "/playlist/"+playlistid;
-  document.getElementById('playlist_iframe') = playlist_iframe;
+  var playlist_iframe = document.getElementById('playlist_iframe').src;
+  playlist_iframe = "https://open.spotify.com/embed/user/" + user_uri + "/playlist/" +playlistid;
+  // playlist_iframe = "https://open.spotify.com/embed/user/22wzuycdg3qep6pwszio7pizi/playlist/2ysn3h0Vmkb4sqmCDyCgqO";
+  document.getElementById('playlist_iframe').src = playlist_iframe;
 </script>
 </html>
