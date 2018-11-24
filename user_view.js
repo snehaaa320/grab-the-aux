@@ -10,6 +10,8 @@ var config = {
 firebase.initializeApp(config);
 var previously_voted = {};
 var num_of_songs = 0;
+var is_guest;
+
 
 firebase.database().ref("/").child('.info/connected').on('value', function(connectedSnap) {
     if (connectedSnap.val() === true) {
@@ -44,13 +46,16 @@ function printToTable(queue_num, song_name, song_artist, currentVote) {
     var song_name_cell = new_row.insertCell(1);
     var song_artist_cell = new_row.insertCell(2);
     var upvotes = new_row.insertCell(3);
-    var played_button = new_row.insertCell(4);
+
     queue_cell.innerHTML = queue_num;
     song_name_cell.innerHTML = song_name;
     song_artist_cell.innerHTML = song_artist;
     upvotes.innerHTML = '<img src="upvote.png" alt="Up Vote" height="20px" onclick="update_vote_count(\'' + song_name + '\',' + (currentVote + 1) + ', 1)"/> &nbsp;' + currentVote;
     upvotes.innerHTML += '&nbsp;&nbsp;<img src="downvote.png" alt="Down Vote" height="20px" onclick="update_vote_count(\'' + song_name + '\',' + (currentVote - 1) + ', 0)" />';
-    played_button.innerHTML = '<button type="submit" name="song_played" onclick="removeSong(' + queue_num + ',\'' + song_name + '\',\'' + song_artist + '\');">Song was Played</button>';
+    if (!is_guest) {
+        var played_button = new_row.insertCell(4);
+        played_button.innerHTML = '<button type="submit" name="song_played" onclick="removeSong(' + queue_num + ',\'' + song_name + '\',\'' + song_artist + '\');">Yes</button>';
+    }
 }
 
 function writeToDB() {
@@ -118,4 +123,22 @@ function removeSong(queue_num, song_name, song_artist) {
     update['Playlist/temp_playlist/Queue/' + song_name + '/'] = null;
     return firebase.database().ref().update(update);
 
+}
+
+function updateGuestBanner() {
+    var queryString = decodeURIComponent(window.location.search);
+    queryString = queryString.substring(1);
+    var queries = queryString.split("&");
+    is_guest = new String(queries[0].split("=")[1]) == String("true")
+    var user_name = queries[1].split("=")[1];
+    console.log(is_guest);
+    document.getElementById("guest_banner").innerHTML = "Welcome, " + user_name;
+}
+
+function hideHostFunctions() {
+    alert("inside hide functions");
+    document.getElementById("search_bar").style.display = "none";
+    var song_table = document.getElementById("song_table");
+    console.log(song_table.rows[0]);
+    song_table.rows[0].deleteCell(4);
 }
