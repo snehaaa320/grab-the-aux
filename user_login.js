@@ -106,13 +106,11 @@ function join() { // Create function on 1st page
     firebase.database().ref('Guest_Table/' + uid).once('value').then(function(snapshot) {
         if (snapshot.hasChild("name")) {
             guest_name = (snapshot.val().name || snapshot.val());
-            redirect_page(guest_name);
+            redirect_page(true, guest_name);
         } else {
             update_view("");
         }
-
     });
-
 }
 
 function generate_url() {
@@ -124,5 +122,9 @@ function generate_url() {
     var randomID = uuid.v4(); // -> '110ec58a-a0f2-4ac4-8393-c866d813b8d1'
     var url = 'http://localhost:5000/' + randomID; // or + timeBasedID
     return url;
+}
 
+function redirect_page(is_guest, user_name) {
+    var queryString = "?is_guest="+is_guest + "&user_name=" + user_name;
+    window.location.href = "user_view.html"+queryString;
 }
