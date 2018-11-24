@@ -38,12 +38,7 @@
         <div id="instructions">
             <h2 id="guest_banner">Welcome, [GUEST USER]</h2>
             <script>
-                var queryString = decodeURIComponent(window.location.search);
-                queryString = queryString.substring(1);
-                var queries = queryString.split("&");
-                var is_guest = queries[0].split("=")[1];
-                var user_name = queries[1].split("=")[1];
-                document.getElementById("guest_banner").innerHTML = "Welcome, " + user_name;
+                updateGuestBanner();
             </script>
             <ol>
                 <li>Enter in a song suggestion to add to the queue.<br>The host will queue each song into the playlist.</li>
@@ -54,9 +49,9 @@
         </div>
     </div>
 
-    <hr>
+    <div id="search_bar" style="display:block;">
+        <hr>
 
-    <div>
         <div class="search_bar">
             <h2>Search (Hosts Only)</h2>
 
@@ -199,7 +194,7 @@
                         <th>Song Name</th>
                         <th>Song Artists</th>
                         <th>Votes</th>
-                        <th>Song Queued</th>
+                        <th id="song_played_cell">Song Played?</th>
                     </tr>
                 </table>
             </div>
@@ -221,6 +216,11 @@
     <div style="text-align: center;">
         <button id="externalButton">Return Home</button>
     </div>
+    <script>
+        if (is_guest) {
+            hideHostFunctions()
+        }
+    </script>
 </body>
 
 </html>
