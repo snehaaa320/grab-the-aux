@@ -8,7 +8,6 @@
   <script type="text/javascript" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
   <script type="text/javascript" src="spotify-web-api-js.js"></script>
   <script type="text/javascript" src="search.js"></script>
-  <script type="text/javascript" src="spotifyapi.js"></script>
 
     <meta charset="UTF-8">
     <title>Sample FirebaseUI App</title>
@@ -96,36 +95,41 @@ function create() {
 
   var spotifyApi = new SpotifyWebApi();
   spotifyApi.setAccessToken(token);
+
+  var playlist_name = prompt("Please enter a name for your playlist:", "new playlist!!");
+
+
   var name={
-  "name": "New Playlist",
+  "name": playlist_name,
   "description": "New playlist description",
   "public": true
   }
+
   spotifyApi.createPlaylist(name)
   .then(function(new_playlist) {
     console.log('Playlist Created!', new_playlist);
     selected_playlist=new_playlist["uri"];
-    console.log(new_playlist["uri"]); 
+    console.log(new_playlist["uri"]);
 
   }, function(err) {
     console.error(err);
   });
 
 return selected_playlist;
-
 }
     </script>
 </head>
 <body>
     <!-- The surrounding HTML is left untouched by FirebaseUI.
          Your app may use that space for branding, controls and other customizations.-->
-    <h1>Welcome to My Awesome App</h1>
+    <h1>Create a playlist or choose an existing one! </h1>
     <div id="firebaseui-auth-container"></div>
     <p> </p>
     <div class="dropdown">
+
       <script> getUserPlaylists();
-      console.log(map[playlists[i]]);
-       </script>
+      </script>
+
 <h3> Select Playlist </h3>
 <button onclick="create()"> <h3>  Create a Playlist </h3> </button>
 <p> </p>
