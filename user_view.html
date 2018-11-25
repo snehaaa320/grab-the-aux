@@ -37,9 +37,6 @@
 
         <div id="instructions">
             <h2 id="guest_banner">Welcome, [GUEST USER]</h2>
-            <script>
-                updateGuestBanner();
-            </script>
             <ol>
                 <li>Enter in a song suggestion to add to the queue.<br>The host will queue each song into the playlist.</li>
                 <li>Scan the list and upvote songs you want to hear.<br>(Downvote ones you don't like)</li>
@@ -66,81 +63,7 @@
                 <!-- <a href="#"></a> -->
 
                 <script>
-                    //token hard coded right now. when we get authorization working it will be passed into the functions
 
-                    var token = 'BQDYwRvWbHIxkgU4UWqgXGYVDzFmxih1y3VleSG7nZgwnYF8EANLk0LhGLgCLIHc7T5lLZX6-2NIZQ_tq1t4rdREM_qhj-Otxtxt5AZos9yP8km9Fevq044kC9luUUGvCRc9XYXUZzCvCDGFFFew61JStqDKateW33l9K-uSwQtBCIEHs57NVUfOM0y_mZPd7-8mJgBuceR9zHCO';
-                    var playlistid = '3zCYmXTvVcvrN27SLll5lk';
-                    var user_uri = '121444178';
-                    var tracks = [];
-                    var song = [];
-                    var user = "user";
-                    var songs = ["Taki Taki - DJ Snake", "Happier - Bastille, Marshmello", "I Like Me Better -Lauv", "Party In The USA- Miley Cyrus", "Wonderwall- Oasis", "Mr. Brightside- The Killers"]
-                    autocomplete(document.getElementById("mysong"), songs);
-
-                    //var song = prompt("Please enter a song", "song goes here");
-                    function start(token) {
-                        var spotifyApi = new SpotifyWebApi();
-                        spotifyApi.setAccessToken(token);
-                        var s = document.getElementById("mysong").value;
-
-                        spotifyApi.getUser(user_uri)
-                            .then(function(data) {
-                                console.log('User data:', data);
-                                user = data["display_name"];
-                                console.log(data["display_name"]);
-                            }, function(err) {
-                                console.error(err);
-                            });
-
-
-
-                        //display top 10 tracks
-                        spotifyApi.searchTracks(s)
-                            .then(function(data) {
-                                console.log('Search result:', data);
-                                console.log(data["tracks"]["items"][0]["name"]);
-                                console.log(data["tracks"]["items"][0]["artists"][0]["name"]);
-                                console.log(data["tracks"]["items"][0]["uri"]);
-
-                                var uri = data["tracks"]["items"][0]["uri"];
-
-                                var map = {};
-                                song.push(uri);
-
-                                for (var i = 0; i < 3; i++) {
-                                    tracks.push(data["tracks"]["items"][i]["uri"]);
-                                    var current = data["tracks"]["items"][i]["artists"][0]["name"];
-
-                                    if (data["tracks"]["items"][i]["artists"][0]["name"] == 'null')
-                                        break;
-
-                                    map[tracks[i]] = data["tracks"]["items"][i]["name"] + "-" + data["tracks"]["items"][i]["artists"][0]["name"];
-                                }
-
-                                document.getElementById('tracks').innerHTML = "<h3> Search Results: </h3>";
-
-                                for (i = 0; i < 3; i++) {
-                                    document.getElementById('tracks').innerHTML += map[tracks[i]] + "<br>";
-                                }
-                                document.getElementById('success').innerHTML = "Success! Your song was found!";
-
-                            }, function(err) {
-                                console.error(err);
-                            });
-
-                    }
-
-                    function addToPlaylist(song, token) {
-                        var spotifyApi = new SpotifyWebApi();
-                        spotifyApi.setAccessToken(token);
-
-                        spotifyApi.addTracksToPlaylist(playlistid, song)
-                            .then(function(playlist) {
-                                console.log('Track added!', playlist);
-                            }, function(err) {
-                                console.error(err);
-                            });
-                    }
                 </script>
 
             </form>
@@ -205,7 +128,7 @@
 
     <div>
         <div class="music_player">
-            <iframe src="https://open.spotify.com/embed/user/121444178/playlist/3zCYmXTvVcvrN27SLll5lk" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            <iframe id="music_player_iframe" src="https://open.spotify.com/embed/user/121444178/playlist/3zCYmXTvVcvrN27SLll5lk" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         </div>
     </div>
 
@@ -217,9 +140,7 @@
         <button id="externalButton">Return Home</button>
     </div>
     <script>
-        if (is_guest) {
-            hideHostFunctions()
-        }
+        parseURL();
     </script>
 </body>
 

@@ -12,6 +12,81 @@ var previously_voted = {};
 var num_of_songs = 0;
 var is_guest;
 
+//token hard coded right now. when we get authorization working it will be passed into the functions
+
+var token = 'BQCupsvY9ePrKfWnl_NEYjlFbOYP6MnyMWE5qCjcyuNRcDfz2uvEHuaIbSJLkk3q8C6umRKg5Emh5U8bF_EgM-vsocJWXQEIYDB7Jw9NJ5TWs3wUXD9gzKFUdOaxI-FZTEKwoTb_kvpmP7POClWoRYeE5m_YReVVcwHDw17gJl6ygF0UO8t997BKXywbELdGpDLjyM2K1d4YdqBEnU0VNuCe644h2Ruq1TKNc_ycTL150ANatZEx61r50xBWzuvxgiOPLXbLkePmvGroB1hOUyEcgjMbinOnMoadPXI';
+var playlist_id = null;
+var user_uri = null;
+var tracks = [];
+var song = [];
+var user = "user";
+// var songs = ["Taki Taki - DJ Snake", "Happier - Bastille, Marshmello", "I Like Me Better -Lauv", "Party In The USA- Miley Cyrus", "Wonderwall- Oasis", "Mr. Brightside- The Killers"]
+// autocomplete(document.getElementById("mysong"), songs);
+
+//var song = prompt("Please enter a song", "song goes here");
+function start(token) {
+    var spotifyApi = new SpotifyWebApi();
+    spotifyApi.setAccessToken(token);
+    var s = document.getElementById("mysong").value;
+
+    spotifyApi.getUser(user_uri)
+        .then(function(data) {
+            console.log('User data:', data);
+            user = data["display_name"];
+            console.log(data["display_name"]);
+        }, function(err) {
+            console.error(err);
+        });
+
+
+
+    //display top 10 tracks
+    spotifyApi.searchTracks(s)
+        .then(function(data) {
+            console.log('Search result:', data);
+            console.log(data["tracks"]["items"][0]["name"]);
+            console.log(data["tracks"]["items"][0]["artists"][0]["name"]);
+            console.log(data["tracks"]["items"][0]["uri"]);
+
+            var uri = data["tracks"]["items"][0]["uri"];
+
+            var map = {};
+            song.push(uri);
+
+            for (var i = 0; i < 3; i++) {
+                tracks.push(data["tracks"]["items"][i]["uri"]);
+                var current = data["tracks"]["items"][i]["artists"][0]["name"];
+
+                if (data["tracks"]["items"][i]["artists"][0]["name"] == 'null')
+                    break;
+
+                map[tracks[i]] = data["tracks"]["items"][i]["name"] + "-" + data["tracks"]["items"][i]["artists"][0]["name"];
+            }
+
+            document.getElementById('tracks').innerHTML = "<h3> Search Results: </h3>";
+
+            for (i = 0; i < 3; i++) {
+                document.getElementById('tracks').innerHTML += map[tracks[i]] + "<br>";
+            }
+            document.getElementById('success').innerHTML = "Success! Your song was found!";
+
+        }, function(err) {
+            console.error(err);
+        });
+
+}
+
+function addToPlaylist(song, token) {
+    var spotifyApi = new SpotifyWebApi();
+    spotifyApi.setAccessToken(token);
+    console.log(playlist_id);
+    spotifyApi.addTracksToPlaylist(playlist_id, song)
+        .then(function(playlist) {
+            console.log('Track added!', playlist);
+        }, function(err) {
+            console.error(err);
+        });
+}
 
 firebase.database().ref("/").child('.info/connected').on('value', function(connectedSnap) {
     if (connectedSnap.val() === true) {
@@ -125,20 +200,30 @@ function removeSong(queue_num, song_name, song_artist) {
 
 }
 
-function updateGuestBanner() {
+function parseURL() {
     var queryString = decodeURIComponent(window.location.search);
     queryString = queryString.substring(1);
     var queries = queryString.split("&");
     is_guest = new String(queries[0].split("=")[1]) == String("true")
-    var user_name = queries[1].split("=")[1];
     console.log(is_guest);
-    document.getElementById("guest_banner").innerHTML = "Welcome, " + user_name;
+    if (is_guest) {
+        console.log("User is a guest")
+        var user_name = queries[1].split("=")[1];
+        console.log(user_name);
+        document.getElementById("guest_banner").innerHTML = "Welcome, " + user_name;
+        hideHostFunctions();
+    } else {
+        console.log("HOST");
+        user_uri = queries[1].split("=")[1];
+        playlist_id = queries[2].split("=")[1];
+        console.log("owner id = " + user_uri);
+        console.log("playlist_id = " + playlist_id);
+        document.getElementById("music_player_iframe").src = "https://open.spotify.com/embed/user/" + user_uri + "/playlist/" + playlist_id;
+    }
 }
 
 function hideHostFunctions() {
-    alert("inside hide functions");
     document.getElementById("search_bar").style.display = "none";
     var song_table = document.getElementById("song_table");
-    console.log(song_table.rows[0]);
     song_table.rows[0].deleteCell(4);
 }
