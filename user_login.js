@@ -127,7 +127,7 @@ function generate_url() {
 }
 
 function redirect_page(is_guest, user_name) {
-    var queryString = "?is_guest=" + is_guest + "&user_name=" + user_name + "&playlist_token="+playlist_token;
+    var queryString = "?is_guest=" + is_guest + "&user_name=" + user_name + "&playlist_token="+playlist_token.value;
     console.log(playlist_token.value);
     window.location.href = "user_view.html" + queryString;
 }
