@@ -3,52 +3,103 @@
 
 <head>
 
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" type="text/css" href="choose_playlist.css">
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
     <script type="text/javascript" src="spotify-web-api-js.js"></script>
-    <script type="text/javascript" src="search.js"></script>
-<<<<<<< HEAD:index.html
-    <script type="text/javascript" src="index.js"></script>
-    <script type="text/javascript" src="authorization_code/app.js"> <script>
-
-=======
     <script type="text/javascript" src="choose_playlist.js"></script>
->>>>>>> a1cebbdbd7451788a5ce925f80f9dff6c28abde2:choose_playlist.html
-    <meta charset="UTF-8">
-    <title>Sample FirebaseUI App</title>
+
+    <title>Choose Playlist</title>
 </head>
 
 <body>
-    <h1>Create a playlist or choose an existing one! </h1>
-    <p> </p>
-    <div class="dropdown">
 
-        <script>
-            getUserPlaylists();
-        </script>
+    <script>
+        getUserPlaylists();
+    </script>
 
-        <h3> Select Playlist </h3>
-        <button onclick="create()"> <h3>  Create a Playlist </h3> </button>
-        <p> </p>
-        <button class="dropbtn"> All Playlists</button>
-        <div class="dropdown-content">
-            <a href="#" onclick="choosePlaylists(0)">
-                <div id="playlist0"> </div>
-            </a>
-            <a href="#" onclick="choosePlaylists(1)">
-                <div id="playlist1"> </div>
-            </a>
-            <a href="#" onclick="choosePlaylists(2)">
-                <div id="playlist2"> </div>
-            </a>
-            <a href="#" onclick="choosePlaylists(3)">
-                <div id="playlist3"> </div>
-            </a>
-            <a href="#" onclick="choosePlaylists(4)">
-                <div id="playlist4"> </div>
-            </a>
+    <div class="top_content">
+        <div id="heading">
+            <h1>Welcome, <br> [HOST NAME]</h1>
         </div>
+
+        <!-- <div id="instructions">
+            <h2>Welcome, [GUEST USER]</h2>
+            <ol>
+                <li></li>
+                <li>View your previously saved playlists!</li>
+                <li>Choose or Create a new playlist below!</li>
+            </ol>
+            <p><button type="submit">Got it!</button></p>
+        </div> -->
+
+    </div>
+
+    <div class="create_playlist">
+
+        <h2>Create Playlist</h2>
+        <p>If you prefer to create a playlist, click the button below and think of a name!</p>
+        <p><button onclick="create()">Create a Playlist</button></p>
+
+    </div>
+
+    <hr>
+
+    <div class="choose_playlist">
+
+        <h2>Choose Playlist</h2>
+        <p>Here are your 6 most recently made playlists. Choose one to start your session!</p>
+
+
+        <table>
+            
+            <tr>
+                <th>Playlist Name</th>
+                <th>Cover Art</th>
+            </tr>
+
+            <tr>
+                <td><a href="#" onclick="choosePlaylists(0)"><div id="playlist0"> </div></a></td>
+                <td><div id="image0"></div></td>
+            </tr>
+
+            <tr>
+                <td><a href="#" onclick="choosePlaylists(1)"><div id="playlist1"> </div></a></td>
+                <td><div id="image1"></div></td>
+            </tr>
+
+            <tr>
+                <td><a href="#" onclick="choosePlaylists(2)"><div id="playlist2"> </div></a></td>
+                <td><div id="image2"></div></td>
+            </tr>
+
+            <tr>
+                <td><a href="#" onclick="choosePlaylists(3)"><div id="playlist3"> </div></a></td>
+                <td><div id="image3"></div></td>
+            </tr>
+
+            <tr>
+                <td><a href="#" onclick="choosePlaylists(4)"><div id="playlist4"> </div></a></td>
+                <td><div id="image4"></div></td>
+            </tr>
+
+            <tr>
+                <td><a href="#" onclick="choosePlaylists(5)"><div id="playlist5"> </div></a></td>
+                <td><div id="image5"></div></td>
+            </tr>
+
+
+
+        </table>
+        
+
+
+    </div>
+
 
 
 </body>
