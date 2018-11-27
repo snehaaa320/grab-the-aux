@@ -16,25 +16,30 @@
         <input type="email" placeholder="Email..." id="email_field" />
         <input type="password" placeholder="Password..." id="password_field" />
 
-        <button onclick="login()">Login </button>
-        <br />
-        <br />
-        <button onclick="anonymous_login()">Login as Guest </button>
+        <p><button onclick="login()">Login</button></p>
+        <a>
+            <button type="button" onclick="redirect_register_page();" value="Register">Register</button>
+        </a>
+
+        <!-- <p><button href="user_register.html" ">Register</button></p> -->
+        <p><button style="background: black; color: white; outline: none;" onclick="anonymous_login()">Continue As Guest</button></p>
     </div>
+
+
+    <!-- this is displayed when user continues as a Guest -->
 
     <div id="guest_div" class="main-div">
-        <input type="text" placeholder="Playlist Token" id = "playlist_token"/>
-        <input type= "text" placeholder="Guest Name..." id="guest_name" />
-        <button onclick="save_guest_name(firebase.auth().currentUser.uid)">Submit</button>
+        <input type- "text" placeholder="Guest Name..." id="guest_name" />
+        <p><button onclick="save_guest_name(firebase.auth().currentUser.uid)">Submit</button></p>
+        <button onclick="logout()">Back</button>
     </div>
 
-    <!-- this is what's displayed after the user has successfully logged in! -->
+    <!-- this is displayed after the user has successfully logged in! -->
 
     <div id="user_div" class="loggedin-div">
         <h3>Welcome User</h3>
         <p id="user_para">Welcome to Firebase web login Example. You're currently logged in.</p>
-        <p>
-            <button onclick="join()"> Join Playlist </button> </p>
+        <p><button onclick="join()"> Join Playlist </button> </p>
         <button onclick="logout()">Logout</button>
     </div>
 </body>
