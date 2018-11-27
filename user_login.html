@@ -29,6 +29,7 @@
     <!-- this is displayed when user continues as a Guest -->
 
     <div id="guest_div" class="main-div">
+        <input type="text" placeholder="Playlist Token" id="playlist_token"/>
         <input type- "text" placeholder="Guest Name..." id="guest_name" />
         <p><button onclick="save_guest_name(firebase.auth().currentUser.uid)">Submit</button></p>
         <button onclick="logout()">Back</button>
