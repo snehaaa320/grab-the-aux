@@ -153,7 +153,8 @@ function register(){
     if(!error_happened){
         window.location.href = "user_login.html"
     }
+}
 
-
-
+function hostRedirect(){
+    window.location.href = "choose_playlist.html"
 }

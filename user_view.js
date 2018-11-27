@@ -12,11 +12,10 @@ var previously_voted = {};
 var num_of_songs = 0;
 var is_guest;
 var playlist_token = null;
-var owner_id = null;
 
 //token hard coded right now. when we get authorization working it will be passed into the functions
 
-var token = 'BQC8o-5nzmPLhsVBOLRCqQSdkQqyTdNHE_N4ibd7PmcUQ8BoTMxW5Lp8S1i94Z-JNPwG6HpEAbCVLy5GAv8x0JFOlcayOplMqONueaSUVZLBEYEUDyXTyTjhMmW-TPb0pz7-Ar8o1opxR2-X1F2FxJNPs2GarNpAQPWdUwoidMUi_7o';
+var token = 'BQDJcCRBggmZQyHJY2ux0MDLIQxj-Y2oX91c2q4xRIO3pn5mHU7xNnN_ko1lWRTNoISSeCNxPtf3V72EI4nPJ1-PUO2ZG3PpPgEzAES5JlACjArGUs87aItkbAlekxfBej01NceXiBogRP2IQzp5OIvpC8BTKxhe2n-SiISbifZ1YYA';
 var playlist_id = null;
 var user_uri = null;
 var tracks = [];
@@ -101,17 +100,19 @@ firebase.database().ref("/").child('.info/connected').on('value', function(conne
 });
 
 function getValuesFromDB() {
-    console.log('Playlist_Table/' + playlist_token + '/Queue/')
-    var queueRef = firebase.database().ref('Playlist_Table/' + playlist_token + '/Queue/').orderByChild('queue_num');
-    queueRef.on('value', function(queue) {
-        num_of_songs = queue.numChildren() + 1;
-        console.log(num_of_songs);
-        queue.forEach(function(song) {
-            printToTable(song.child('queue_num').val(), song.key, song.child('Artist').val(), song.child('Upvotes').val());
+    if (playlist_token !== null) {
+        console.log('Playlist_Table/' + playlist_token + '/Queue/')
+        var queueRef = firebase.database().ref('Playlist_Table/' + playlist_token + '/Queue/').orderByChild('queue_num');
+        queueRef.on('value', function(queue) {
+            num_of_songs = queue.numChildren() + 1;
+            console.log(num_of_songs);
+            queue.forEach(function(song) {
+                printToTable(song.child('queue_num').val(), song.key, song.child('Artist').val(), song.child('Upvotes').val());
+            });
+        }, function(error) {
+            console.log("Error : " + error.code);
         });
-    }, function(error) {
-        console.log("Error : " + error.code);
-    });
+    }
 }
 
 function printToTable(queue_num, song_name, song_artist, currentVote) {
@@ -208,11 +209,12 @@ function parseURL() {
     var queryString = decodeURIComponent(window.location.search);
     queryString = queryString.substring(1);
     var queries = queryString.split("&");
-    is_guest = new String(queries[0].split("=")[1]) == String("true")
+    is_guest = new String(queries[0].split("=")[1]) == String("true");
+    user = queries[1].split("=")[1];
+    console.log("Name of user " + user);
     console.log(is_guest);
     if (is_guest) {
         console.log("User is a guest")
-        var user_name = queries[1].split("=")[1];
         playlist_token = queries[2].split("=")[1];
         console.log(user_name);
         document.getElementById("guest_banner").innerHTML = "Welcome, " + user_name;
@@ -221,8 +223,9 @@ function parseURL() {
         hideHostFunctions();
     } else {
         console.log("HOST");
-        user_uri = queries[1].split("=")[1];
-        playlist_id = queries[2].split("=")[1];
+        document.getElementById("instructions").style.display = "none";
+        user_uri = queries[2].split("=")[1];
+        playlist_id = queries[3].split("=")[1];
         console.log("owner id = " + user_uri);
         console.log("playlist_id = " + playlist_id);
         document.getElementById("music_player_iframe").src = "https://open.spotify.com/embed/user/" + user_uri + "/playlist/" + playlist_id;
@@ -245,13 +248,14 @@ function generateUniqueKey() {
             console.log(childSnap.key);
             if (String(childSnap.child("spotify_playlist_id").val()) == String(playlist_id)) {
                 playlist_id = childSnap.child("spotify_playlist_id").val();
-                owner_id = childSnap.child("spotify_owner_id").val();
+                user_uri = childSnap.child("spotify_user_uri").val();
                 found_playlist = true;
                 console.log("Playlist Token Exists!");
                 playlist_token = childSnap.key;
-                console.log("Owner_id = " + owner_id);
-                document.getElementById("host_playlist_heading") = owner_id + "\'s PLAYLIST";
+                console.log("Owner_id = " + user_uri);
+                document.getElementById("host_playlist_heading").innerHTML = "Welcome to " + user + "\'s Playlist";
                 document.getElementById("playlist_token").innerHTML += playlist_token;
+                getValuesFromDB();
             } else {
                 console.log("Playlist Token DOES NOT EXIST!");
             }
@@ -261,7 +265,6 @@ function generateUniqueKey() {
             document.getElementById("playlist_token").innerHTML += playlist_token;
 
         }
-        // getValuesFromDB();
     });
 
 
@@ -283,18 +286,21 @@ function createNewToken() {
     console.log("DB - Written " + playlist_token);
 }
 
-function getPlaylist(playlist_token){
-    firebase.database().ref(`Playlist_Table/` + playlist_token).once("value",snapshot =>{
+function getPlaylist(playlist_token) {
+    firebase.database().ref(`Playlist_Table/` + playlist_token).once("value", snapshot => {
         console.log(`Playlist_Table/` + playlist_token);
-        if(snapshot.exists()){
+        if (snapshot.exists()) {
             var found_playlist = false;
             console.log(snapshot.child("spotify_playlist_id").val())
-            owner_id = snapshot.child("spotify_user_uri").val();
+            user_uri = snapshot.child("spotify_user_uri").val();
             console.log(snapshot.key);
             console.log(owner_id);
-        }
-        else {
+        } else {
             console.log("snapshot does not exists");
         }
     });
+}
+
+function returnToHome() {
+
 }
