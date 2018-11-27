@@ -11,10 +11,12 @@ firebase.initializeApp(config);
 var previously_voted = {};
 var num_of_songs = 0;
 var is_guest;
+var playlist_token = null;
+var owner_id = null;
 
 //token hard coded right now. when we get authorization working it will be passed into the functions
 
-var token = 'BQCupsvY9ePrKfWnl_NEYjlFbOYP6MnyMWE5qCjcyuNRcDfz2uvEHuaIbSJLkk3q8C6umRKg5Emh5U8bF_EgM-vsocJWXQEIYDB7Jw9NJ5TWs3wUXD9gzKFUdOaxI-FZTEKwoTb_kvpmP7POClWoRYeE5m_YReVVcwHDw17gJl6ygF0UO8t997BKXywbELdGpDLjyM2K1d4YdqBEnU0VNuCe644h2Ruq1TKNc_ycTL150ANatZEx61r50xBWzuvxgiOPLXbLkePmvGroB1hOUyEcgjMbinOnMoadPXI';
+var token = 'BQC8o-5nzmPLhsVBOLRCqQSdkQqyTdNHE_N4ibd7PmcUQ8BoTMxW5Lp8S1i94Z-JNPwG6HpEAbCVLy5GAv8x0JFOlcayOplMqONueaSUVZLBEYEUDyXTyTjhMmW-TPb0pz7-Ar8o1opxR2-X1F2FxJNPs2GarNpAQPWdUwoidMUi_7o';
 var playlist_id = null;
 var user_uri = null;
 var tracks = [];
@@ -33,6 +35,7 @@ function start(token) {
         .then(function(data) {
             console.log('User data:', data);
             user = data["display_name"];
+            console.log("user");
             console.log(data["display_name"]);
         }, function(err) {
             console.error(err);
@@ -98,7 +101,8 @@ firebase.database().ref("/").child('.info/connected').on('value', function(conne
 });
 
 function getValuesFromDB() {
-    var queueRef = firebase.database().ref('Playlist/temp_playlist/Queue/').orderByChild('queue_num');
+    console.log('Playlist_Table/' + playlist_token + '/Queue/')
+    var queueRef = firebase.database().ref('Playlist_Table/' + playlist_token + '/Queue/').orderByChild('queue_num');
     queueRef.on('value', function(queue) {
         num_of_songs = queue.numChildren() + 1;
         console.log(num_of_songs);
@@ -138,7 +142,7 @@ function writeToDB() {
     window.location.href = 'upvotes.html' + '#' + song_name;
 
     var song_artist = document.getElementById("song_artist").value;
-    firebase.database().ref('Playlist/temp_playlist/Queue/' + song_name).set({
+    firebase.database().ref('Playlist_Table/' + playlist_token + '/Queue/' + song_name).set({
         Artist: song_artist,
         Upvotes: 0,
         queue_num: num_of_songs,
@@ -161,7 +165,7 @@ function update_vote_count(song_name, new_vote, upvote) {
             new_vote = new_vote - 1;
         }
 
-        update['Playlist/temp_playlist/Queue/' + song_name + '/Upvotes'] = new_vote;
+        update['Playlist_Table/' + playlist_token + '/Queue/' + song_name + '/Upvotes'] = new_vote;
     }
     if (upvote == 1) {
         previously_voted[song_name + upvote] = true;
@@ -170,7 +174,7 @@ function update_vote_count(song_name, new_vote, upvote) {
             previously_voted[song_name + temp_variable] = false;
             new_vote = new_vote + 1;
         }
-        update['Playlist/temp_playlist/Queue/' + song_name + '/Upvotes'] = new_vote;
+        update['Playlist_Table/' + playlist_token + '/Queue/' + song_name + '/Upvotes'] = new_vote;
     }
 
     return firebase.database().ref().update(update);
@@ -188,14 +192,14 @@ function removeSong(queue_num, song_name, song_artist) {
         console.log(table.rows.length);
         console.log("Inside while loop");
         if (table.rows[1].cells[0].innerHTML != queue_num) {
-            update['Playlist/temp_playlist/Queue/' + table.rows[1].cells[1].innerHTML + '/queue_num'] = temp_queue_num++;
+            update['Playlist_Table/' + playlist_token + '/Queue/' + table.rows[1].cells[1].innerHTML + '/queue_num'] = temp_queue_num++;
         }
         table.deleteRow(1);
     }
     console.log(num_of_songs);
     num_of_songs--;
     console.log(num_of_songs);
-    update['Playlist/temp_playlist/Queue/' + song_name + '/'] = null;
+    update['Playlist_Table/' + playlist_token + '/Queue/' + song_name + '/'] = null;
     return firebase.database().ref().update(update);
 
 }
@@ -209,8 +213,11 @@ function parseURL() {
     if (is_guest) {
         console.log("User is a guest")
         var user_name = queries[1].split("=")[1];
+        playlist_token = queries[2].split("=")[1];
         console.log(user_name);
         document.getElementById("guest_banner").innerHTML = "Welcome, " + user_name;
+        document.getElementById("playlist_token").innerHTML = "You are connected to : " + playlist_token;
+        getPlaylist(playlist_token);
         hideHostFunctions();
     } else {
         console.log("HOST");
@@ -219,6 +226,7 @@ function parseURL() {
         console.log("owner id = " + user_uri);
         console.log("playlist_id = " + playlist_id);
         document.getElementById("music_player_iframe").src = "https://open.spotify.com/embed/user/" + user_uri + "/playlist/" + playlist_id;
+        generateUniqueKey();
     }
 }
 
@@ -226,4 +234,67 @@ function hideHostFunctions() {
     document.getElementById("search_bar").style.display = "none";
     var song_table = document.getElementById("song_table");
     song_table.rows[0].deleteCell(4);
+    document.getElementById("playlist_token").style.display = "none";
+}
+
+function generateUniqueKey() {
+
+    firebase.database().ref(`Playlist_Table/`).once("value").then(function(snapshot) {
+        var found_playlist = false;
+        snapshot.forEach(function(childSnap) {
+            console.log(childSnap.key);
+            if (String(childSnap.child("spotify_playlist_id").val()) == String(playlist_id)) {
+                playlist_id = childSnap.child("spotify_playlist_id").val();
+                owner_id = childSnap.child("spotify_owner_id").val();
+                found_playlist = true;
+                console.log("Playlist Token Exists!");
+                playlist_token = childSnap.key;
+                console.log("Owner_id = " + owner_id);
+                document.getElementById("host_playlist_heading") = owner_id + "\'s PLAYLIST";
+                document.getElementById("playlist_token").innerHTML += playlist_token;
+            } else {
+                console.log("Playlist Token DOES NOT EXIST!");
+            }
+        });
+        if (!found_playlist) {
+            createNewToken();
+            document.getElementById("playlist_token").innerHTML += playlist_token;
+
+        }
+        // getValuesFromDB();
+    });
+
+
+}
+
+function createNewToken() {
+
+    var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
+    playlist_token = "";
+    for (var i = 0; i < 6; i++) {
+        playlist_token += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    console.error("Created new playlist token : " + playlist_token + "\nWriting to DB now");
+    firebase.database().ref('Playlist_Table/' + playlist_token).set({
+        spotify_playlist_id: playlist_id,
+        spotify_user_uri: user_uri,
+    });
+    // document.getElementById("playlist_token").innerHTML += playlist_token;
+    console.log("DB - Written " + playlist_token);
+}
+
+function getPlaylist(playlist_token){
+    firebase.database().ref(`Playlist_Table/` + playlist_token).once("value",snapshot =>{
+        console.log(`Playlist_Table/` + playlist_token);
+        if(snapshot.exists()){
+            var found_playlist = false;
+            console.log(snapshot.child("spotify_playlist_id").val())
+            owner_id = snapshot.child("spotify_user_uri").val();
+            console.log(snapshot.key);
+            console.log(owner_id);
+        }
+        else {
+            console.log("snapshot does not exists");
+        }
+    });
 }

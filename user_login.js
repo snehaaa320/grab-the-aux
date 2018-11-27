@@ -67,9 +67,11 @@ function logout() {
 // This function uses the uid to save the name of the
 function save_guest_name(uid) {
     var name = document.getElementById("guest_name").value;
+    var playlist_token = document.getElementById("playlist_token").value;
     if (typeof uid !== "undefined") {
         firebase.database().ref('Guest_Table/' + uid).set({
-            name: name
+            name: name,
+            playlist_token: playlist_token,
         });
     }
     var guest_name;
@@ -125,6 +127,7 @@ function generate_url() {
 }
 
 function redirect_page(is_guest, user_name) {
-    var queryString = "?is_guest="+is_guest + "&user_name=" + user_name;
-    window.location.href = "user_view.html"+queryString;
+    var queryString = "?is_guest=" + is_guest + "&user_name=" + user_name + "&playlist_token="+playlist_token;
+    console.log(playlist_token.value);
+    window.location.href = "user_view.html" + queryString;
 }
