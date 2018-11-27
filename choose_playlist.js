@@ -1,7 +1,10 @@
-var token = 'BQCupsvY9ePrKfWnl_NEYjlFbOYP6MnyMWE5qCjcyuNRcDfz2uvEHuaIbSJLkk3q8C6umRKg5Emh5U8bF_EgM-vsocJWXQEIYDB7Jw9NJ5TWs3wUXD9gzKFUdOaxI-FZTEKwoTb_kvpmP7POClWoRYeE5m_YReVVcwHDw17gJl6ygF0UO8t997BKXywbELdGpDLjyM2K1d4YdqBEnU0VNuCe644h2Ruq1TKNc_ycTL150ANatZEx61r50xBWzuvxgiOPLXbLkePmvGroB1hOUyEcgjMbinOnMoadPXI';
+var token = 'BQDI8BFThLtd0TnEKaZHV3E2z4gGMx_dXEu3sdwoEgELKKJwayCn_551f8Q-iHlbWkbtf1U_2iGkaAAtoZayjNDnfSBcNv0OvVmoOYB89VU0EUvUBiZSOg5eBP9yD8iTU5YE8CDLOD7YtsC5nionIwn9V-Rt7wZ-7KP9JWlUdhHEuYm-QEckAOF1dvBx3H4yXXXZtdvua5W5MSc3jsd1Yx-4Qr3t-y9DgWW5op6l0qZBAQubBUGiuGfj1Ld_aY_iCh2-6HDCqiZ_0CjsoGa7493avQDAGBPFPrLCCtwo';
 var playlistid = '2ysn3h0Vmkb4sqmCDyCgqO';
-var user_uri = '22wzuycdg3qep6pwszio7pizi';
-var song = []
+var user_uri ='22wzuycdg3qep6pwszio7pizi';
+//var token = get_access_token();
+//var user_uri = get_user_uri();
+
+var song = [];
 var playlists = [];
 var map = {};
 var selected_playlist;

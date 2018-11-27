@@ -12,6 +12,8 @@ var request = require('request'); // "Request" library
 var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
+var access_token;
+var uri;
 
 var client_id = '19ec6ba213f34beabbdad9a41fbf3b05'; // Your client id
 var client_secret = '833518f68ba746f1bd02c98972e40e1e'; // Your secret
@@ -89,7 +91,7 @@ app.get('/callback', function(req, res) {
     request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
 
-        var access_token = body.access_token,
+            access_token = body.access_token,
             refresh_token = body.refresh_token;
 
         var options = {
@@ -101,6 +103,10 @@ app.get('/callback', function(req, res) {
         // use the access token to access the Spotify Web API
         request.get(options, function(error, response, body) {
           console.log(body);
+          console.log('ID is:', body['id']);
+          console.log('Access token is:', access_token);
+          uri=body['id'];
+          console.log(uri);
         });
 
         // we can also pass the token to the browser to make requests from there
@@ -135,13 +141,19 @@ app.get('/refresh_token', function(req, res) {
 
   request.post(authOptions, function(error, response, body) {
     if (!error && response.statusCode === 200) {
-      var access_token = body.access_token;
+      access_token = body.access_token;
       res.send({
         'access_token': access_token
       });
     }
   });
 });
-
 console.log('Listening on 8888');
 app.listen(8888);
+
+require(['express'], function get_access_token(){
+  return access_token;
+});
+function get_user_uri(){
+  return uri;
+}
