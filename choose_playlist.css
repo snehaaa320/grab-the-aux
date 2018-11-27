@@ -1,3 +1,67 @@
+
+
+.top_content{
+
+    /*margin: 0 0 0 0;*/
+    /*text-align: left;*/
+    /*color: #000;*/
+    text-align: center;
+    width: 100%;
+}
+
+#heading{
+
+    background: black;
+    color: white;
+    padding: 10px;
+}
+
+#instructions{
+
+    background: grey;
+    color: white;
+    padding: 10px;
+    font-size: 15px;
+
+}
+
+.create_playlist{
+
+    width: 90%;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+
+}
+
+.choose_playlist{
+
+    width: 90%;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+
+}
+
+.choose_playlist table{
+
+    border: 1px solid black;
+    border-collapse: collapse;
+    margin: 0 auto;
+
+    width: 100%;
+    /*height: ;*/
+
+}
+
+.choose_playlist th, td{
+
+    border: 1px solid black;
+    border-collapse: collapse;
+
+}
+
+
 /* Dropdown Button */
 .dropbtn {
     background-color: #4CAF50;
@@ -39,3 +103,15 @@
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+
+button{
+
+    background-color: black;
+    color: white;
+    text-align: center;
+    border-radius: 12px;
+    font-size: 20px;
+    padding-right: 5px;
+
+}
