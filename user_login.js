@@ -131,3 +131,29 @@ function redirect_page(is_guest, user_name) {
     console.log(playlist_token.value);
     window.location.href = "user_view.html" + queryString;
 }
+
+function redirect_register_page(){
+    logout();
+    window.location.href="user_register.html";
+}
+
+function register(){
+
+    var userEmail = document.getElementById("email_field").value;
+    var userPass = document.getElementById("password_field").value;
+    var error_happened = false;
+    firebase.auth().createUserWithEmailAndPassword(userEmail, userPass).catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    
+    window.alert("Error : " + errorMessage);
+    error_happened = true;
+    });
+    if(!error_happened){
+        window.location.href = "user_login.html"
+    }
+
+
+
+}
