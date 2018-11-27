@@ -15,7 +15,7 @@ var playlist_token = null;
 
 //token hard coded right now. when we get authorization working it will be passed into the functions
 
-var token = 'BQDJcCRBggmZQyHJY2ux0MDLIQxj-Y2oX91c2q4xRIO3pn5mHU7xNnN_ko1lWRTNoISSeCNxPtf3V72EI4nPJ1-PUO2ZG3PpPgEzAES5JlACjArGUs87aItkbAlekxfBej01NceXiBogRP2IQzp5OIvpC8BTKxhe2n-SiISbifZ1YYA';
+var token = null;
 var playlist_id = null;
 var user_uri = null;
 var tracks = [];
@@ -226,6 +226,7 @@ function parseURL() {
         document.getElementById("instructions").style.display = "none";
         user_uri = queries[2].split("=")[1];
         playlist_id = queries[3].split("=")[1];
+        token = queries[4].split("=")[1];
         console.log("owner id = " + user_uri);
         console.log("playlist_id = " + playlist_id);
         document.getElementById("music_player_iframe").src = "https://open.spotify.com/embed/user/" + user_uri + "/playlist/" + playlist_id;
@@ -238,6 +239,7 @@ function hideHostFunctions() {
     var song_table = document.getElementById("song_table");
     song_table.rows[0].deleteCell(4);
     document.getElementById("playlist_token").style.display = "none";
+    document.getElementById("homeButtonDiv").style.display = "none";
 }
 
 function generateUniqueKey() {
@@ -302,5 +304,5 @@ function getPlaylist(playlist_token) {
 }
 
 function returnToHome() {
-
+    window.location.href = "choose_playlist.html";
 }

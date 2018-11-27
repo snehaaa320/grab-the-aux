@@ -1,4 +1,4 @@
-var token = 'BQDJcCRBggmZQyHJY2ux0MDLIQxj-Y2oX91c2q4xRIO3pn5mHU7xNnN_ko1lWRTNoISSeCNxPtf3V72EI4nPJ1-PUO2ZG3PpPgEzAES5JlACjArGUs87aItkbAlekxfBej01NceXiBogRP2IQzp5OIvpC8BTKxhe2n-SiISbifZ1YYA';
+var token = 'BQBtl4smIfdxlL5Ry3qjgsLYsY3pImyPmeqI3Py4JU9Sm8WJhmDfVxmy7sylh1fzIokBPbJXH_WN9OxlSBlOK8IcZ4NJJkdA8ywpGOgU5xb7niCHihmW8RUHOXbE_6Z4SQooxUz7HIJt0bhiamp7C6vdLQWJAmox82jCxe9nFCDYrUDEETbKKL0DrtDdhO27Y2Pdb-LCo6ZSUIxpchr1eAJTUpMJAxjn3UE_bzc2aHKyIQrQ7HpzXsQfHJ6MQuBGwxunRP5wl8zr_HvazJc-2ou-wA7ytRs0lrJvprs';
 var user_uri ='22wzuycdg3qep6pwszio7pizi';
 var song = []
 var playlists = [];
@@ -77,5 +77,6 @@ function redirect_to_user_view(selected_playlist) {
     console.log("Owner's Name  = " + selected_playlist["owner"]["display_name"]);
     console.log("Owner ID  = " + selected_playlist["owner"]["id"]);
     console.log("Playlist ID = " + selected_playlist["id"]);
-    window.location.href = "user_view.html?is_guest=false&name="+ selected_playlist["owner"]["display_name"] + "&user_uri="+selected_playlist["owner"]["id"]+ "&playlist_id=" + selected_playlist["id"];
+    console.log("Token  = " + token);
+    window.location.href = "user_view.html?is_guest=false&name="+ selected_playlist["owner"]["display_name"] + "&user_uri="+selected_playlist["owner"]["id"]+ "&playlist_id=" + selected_playlist["id"] + "&token="+ token;
 }
