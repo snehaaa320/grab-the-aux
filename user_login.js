@@ -151,8 +151,18 @@ function register(){
     error_happened = true;
     });
     if(!error_happened){
-        window.location.href = "user_login.html"
+        console.log("STARTING DELAY")
+        window.setTimeout(redirect_login, 5000);
+        // window.location.href = "user_login.html"
+        console.log("REDIRECT COMPLETE")
     }
+}
+
+function redirect_login(){
+
+    console.log("REACHING DIRECT FUNC")
+    window.location.href = "user_login.html"
+
 }
 
 function hostRedirect(){
