@@ -15,7 +15,7 @@ var playlist_token = null;
 
 //token hard coded right now. when we get authorization working it will be passed into the functions
 
-var token = 'BQDJcCRBggmZQyHJY2ux0MDLIQxj-Y2oX91c2q4xRIO3pn5mHU7xNnN_ko1lWRTNoISSeCNxPtf3V72EI4nPJ1-PUO2ZG3PpPgEzAES5JlACjArGUs87aItkbAlekxfBej01NceXiBogRP2IQzp5OIvpC8BTKxhe2n-SiISbifZ1YYA';
+var token = null;
 var playlist_id = null;
 var user_uri = null;
 var tracks = [];
@@ -216,8 +216,8 @@ function parseURL() {
     if (is_guest) {
         console.log("User is a guest")
         playlist_token = queries[2].split("=")[1];
-        console.log(user_name);
-        document.getElementById("guest_banner").innerHTML = "Welcome, " + user_name;
+        console.log(user);
+        document.getElementById("guest_banner").innerHTML = "Welcome, " + user;
         document.getElementById("playlist_token").innerHTML = "You are connected to : " + playlist_token;
         getPlaylist(playlist_token);
         hideHostFunctions();
@@ -226,8 +226,10 @@ function parseURL() {
         document.getElementById("instructions").style.display = "none";
         user_uri = queries[2].split("=")[1];
         playlist_id = queries[3].split("=")[1];
+        token = queries[4].split("=")[1];
         console.log("owner id = " + user_uri);
         console.log("playlist_id = " + playlist_id);
+        console.log("Spotify Token = " + token);
         document.getElementById("music_player_iframe").src = "https://open.spotify.com/embed/user/" + user_uri + "/playlist/" + playlist_id;
         generateUniqueKey();
     }
@@ -281,6 +283,7 @@ function createNewToken() {
     firebase.database().ref('Playlist_Table/' + playlist_token).set({
         spotify_playlist_id: playlist_id,
         spotify_user_uri: user_uri,
+        host_name : user,
     });
     // document.getElementById("playlist_token").innerHTML += playlist_token;
     console.log("DB - Written " + playlist_token);
@@ -293,8 +296,8 @@ function getPlaylist(playlist_token) {
             var found_playlist = false;
             console.log(snapshot.child("spotify_playlist_id").val())
             user_uri = snapshot.child("spotify_user_uri").val();
-            console.log(snapshot.key);
-            console.log(owner_id);
+            console.log(user_uri);
+            document.getElementById("host_playlist_heading").innerHTML = snapshot.child("host_name").val() + " Playlist";
         } else {
             console.log("snapshot does not exists");
         }
@@ -302,5 +305,10 @@ function getPlaylist(playlist_token) {
 }
 
 function returnToHome() {
-
+    if(is_guest){
+        window.location.href = "user_login.html";
+    }
+    else{
+        window.location.href = "choose_playlist.html";
+    }
 }
