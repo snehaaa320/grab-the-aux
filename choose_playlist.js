@@ -1,4 +1,4 @@
-var token = 'BQBtl4smIfdxlL5Ry3qjgsLYsY3pImyPmeqI3Py4JU9Sm8WJhmDfVxmy7sylh1fzIokBPbJXH_WN9OxlSBlOK8IcZ4NJJkdA8ywpGOgU5xb7niCHihmW8RUHOXbE_6Z4SQooxUz7HIJt0bhiamp7C6vdLQWJAmox82jCxe9nFCDYrUDEETbKKL0DrtDdhO27Y2Pdb-LCo6ZSUIxpchr1eAJTUpMJAxjn3UE_bzc2aHKyIQrQ7HpzXsQfHJ6MQuBGwxunRP5wl8zr_HvazJc-2ou-wA7ytRs0lrJvprs';
+var token = 'BQDJcCRBggmZQyHJY2ux0MDLIQxj-Y2oX91c2q4xRIO3pn5mHU7xNnN_ko1lWRTNoISSeCNxPtf3V72EI4nPJ1-PUO2ZG3PpPgEzAES5JlACjArGUs87aItkbAlekxfBej01NceXiBogRP2IQzp5OIvpC8BTKxhe2n-SiISbifZ1YYA';
 var user_uri ='22wzuycdg3qep6pwszio7pizi';
 var song = []
 var playlists = [];
@@ -20,14 +20,8 @@ function getUserPlaylists() {
             for (var i = 0; i < 6; i++) {
                 //playlists stores the uri of each playlist
                 playlists.push(data["items"][i]);
-                
-                //push the url of cover if there is a cover, else push default (hello by adele)
-                if(data["items"][i]["images"][0] != null){
-                  images.push(data["items"][i]["images"][0]["url"]);
-                }
-                else {
-                  images.push("https://i.scdn.co/image/602102500b9cebde7559a5f9c16daaaef2846440");
-                }
+
+                images.push(data["items"][i]["images"][0]["url"]);
 
                 //this is a map of the uri of the playlist to the name of the playlist
                 map[playlists[i]] = data["items"][i]["name"];
@@ -36,7 +30,6 @@ function getUserPlaylists() {
                 var image="image" + i;
 
                 document.getElementById(p).innerHTML = map[playlists[i]];
-
                 document.getElementById(image).innerHTML = '<img width="200" height="200" src='+ images[i]+'>';
 
                 console.log(playlists[i]);
