@@ -77,6 +77,5 @@ function redirect_to_user_view(selected_playlist) {
     console.log("Owner's Name  = " + selected_playlist["owner"]["display_name"]);
     console.log("Owner ID  = " + selected_playlist["owner"]["id"]);
     console.log("Playlist ID = " + selected_playlist["id"]);
-    console.log("Token  = " + token);
-    window.location.href = "user_view.html?is_guest=false&name="+ selected_playlist["owner"]["display_name"] + "&user_uri="+selected_playlist["owner"]["id"]+ "&playlist_id=" + selected_playlist["id"] + "&token="+ token;
+    window.location.href = "user_view.html?is_guest=false&name="+ selected_playlist["owner"]["display_name"] + "&user_uri="+selected_playlist["owner"]["id"]+ "&playlist_id=" + selected_playlist["id"];
 }
