@@ -239,7 +239,6 @@ function hideHostFunctions() {
     document.getElementById("search_bar").style.display = "none";
     var song_table = document.getElementById("song_table");
     song_table.rows[0].deleteCell(4);
-    document.getElementById("playlist_token").style.display = "none";
 }
 
 function generateUniqueKey() {
@@ -265,11 +264,8 @@ function generateUniqueKey() {
         if (!found_playlist) {
             createNewToken();
             document.getElementById("playlist_token").innerHTML += playlist_token;
-
         }
     });
-
-
 }
 
 function createNewToken() {
@@ -294,10 +290,11 @@ function getPlaylist(playlist_token) {
         console.log(`Playlist_Table/` + playlist_token);
         if (snapshot.exists()) {
             var found_playlist = false;
-            console.log(snapshot.child("spotify_playlist_id").val())
+            console.log("Playlist ID = " + snapshot.child("spotify_playlist_id").val());
+            playlist_id = snapshot.child("spotify_playlist_id").val();
             user_uri = snapshot.child("spotify_user_uri").val();
-            console.log(user_uri);
             document.getElementById("host_playlist_heading").innerHTML = snapshot.child("host_name").val() + " Playlist";
+            document.getElementById("music_player_iframe").src = "https://open.spotify.com/embed/user/" + user_uri + "/playlist/" + playlist_id;
         } else {
             console.log("snapshot does not exists");
         }
