@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <!-- <meta http-equiv="content-type" content="text/html; charset=UTF-8"> -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css" />
+
+
+    <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js" type="text/javascript"></script>
+    <script src="user_view.js" type="text/javascript"></script>
+
+    <!-- SCRIPTS FOR SEARCH FUNCTIONALITY -->
+    <script type="text/javascript" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
+    <script type="text/javascript" src="spotify-web-api-js.js"></script>
+    <script type="text/javascript" src="search.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js" type="text/javascript"></script>
+
+    <title>Upvote/Downvote</title>
+
+    <!-- TODO: Missing CoffeeScript 2 -->
+
+</head>
+
+<body>
+
+    <div class="top_content headTitle">
+            <h1 id="playlist_token"> Key for Guests : </h1>
+            <h1 id="host_playlist_heading">[HOST NAME] PLAYLIST</h1>
+        </div>
+
+        <div id="instructions">
+            <h2 class="subheadTitle" id="guest_banner">Welcome, [GUEST USER]</h2>
+            <p>
+                Enter in a <span class="subheadTitle">song suggestion</span> to add to the queue. The host will queue each song into the <span class="subheadTitle">playlist</span>.
+                <span class="subheadTitle">Upvote songs</span> you want to hear.
+                Dance to the <span class="subheadTitle">music</span> being played & wait for yours!
+            </p>
+        </div>
+    </div>
+
+    <div id="search_bar" style="display:block;">
+        <hr>
+
+        <div class="search_bar">
+            <h2>Search (Hosts Only)</h2>
+
+
+            <form autocomplete="off" accept-charset="utf-8" class="search-container">
+
+                <div class="autocomplete" style="width:300px;">
+                    <input id="mysong" type="search" name="mysong" placeholder="Songs" value="">
+                </div>
+
+                <!-- <input type="text" id="search-bar" placeholder="Search Your Song"> -->
+                <!-- <a href="#"></a> -->
+
+                <script>
+                </script>
+
+            </form>
+
+            <p><button type="submit" onclick="start(token)">Search</button></p>
+
+            <!-- <img class="search-icon" src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png"> -->
+            <div id="success"></div>
+            <div id="tracks"></div>
+            <p><button type="submit" onclick="addToPlaylist(song, token)"> Add to Playlist </button></p>
+
+
+
+        </div>
+    </div>
+
+    <hr>
+
+    <div>
+        <div class="guest_form">
+
+            <div id="write_suggestion_div">
+                <h2>Suggest Songs</h2>
+                <form id="suggestions" method="post">
+                    <table style="width:100%;padding:10px;">
+                        <tr>
+                            <td><input id="song_name" type="text" name="song_name" placeholder="Type Song Name..."></td>
+                        </tr>
+                        <tr>
+                            <td><input id="song_artist" type="text" name="song_artist" placeholder="Type Artist Name..."></td>
+                        </tr>
+                    </table>
+                    <button type="submit" name="submit_suggestions" onclick="writeToDB();">Submit</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <hr>
+
+    <div>
+        <div class="suggestion_box">
+            <div id="song_div">
+                <h2>Current Queue</h2>
+                <table id="song_table" style="width: 100%; margin: 10px;">
+                    <tr>
+                        <th>Queue #</th>
+                        <th>Song Name</th>
+                        <th>Song Artists</th>
+                        <th>Votes</th>
+                        <th id="song_played_cell">Song Played?</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div>
+        <div class="music_player">
+            <iframe id="music_player_iframe" src="https://open.spotify.com/embed/user/121444178/playlist/3zCYmXTvVcvrN27SLll5lk" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        </div>
+    </div>
+
+
+    <div id="app">
+    </div>
+
+    <div style="text-align: center; margin: 10px;">
+        <button id="externalButton" onclick="returnToHome();">Return Home</button>
+    </div>
+    <script>
+        parseURL();
+    </script>
+</body>
+
+</html>

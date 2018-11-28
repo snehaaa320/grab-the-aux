@@ -1,0 +1,166 @@
+
+
+/*TOP INFORMATION AND CONTENT*/
+
+.top_content{
+
+	/*margin: 0 0 0 0;*/
+	/*text-align: left;*/
+    /*color: #000;*/
+    text-align: center;
+    width: 100%;
+}
+
+#heading{
+
+	background: black;
+	color: white;
+	padding: 10px;
+}
+
+#instructions{
+
+	background: grey;
+	color: white;
+	padding: 10px;
+	font-size: 15px;
+
+}
+
+/*SEARCHING BAR*/
+
+.search_bar{
+
+	width: 90%;
+  	display: block;
+  	margin: 0 auto;
+	text-align: center;
+
+}
+
+.search-container{
+
+	width: 90%;
+	display: block;
+	margin: 0 auto;
+
+}
+
+input#mysong{
+  	margin: 0 auto;
+  	width: 70%;
+  	height: 45px;
+  	padding: 0 20px;
+  	font-size: 1rem;
+  	border: 1px solid #D0CFCE;
+  	outline: none;
+  	&:focus{
+    	border: 1px solid #008ABF;
+	    transition: 0.35s ease;
+	    color: #008ABF;
+	    &::-webkit-input-placeholder{
+	    transition: opacity 0.45s ease; 
+	  	opacity: 0;
+    }
+    &::-moz-placeholder {
+      	transition: opacity 0.45s ease; 
+  	  	opacity: 0;
+    }
+    &:-ms-placeholder {
+     	transition: opacity 0.45s ease; 
+  	 	opacity: 0;
+    }    
+   }
+ }
+
+.search-icon{
+  position: relative;
+  float: right;
+  width: 75px;
+  height: 75px;
+  top: -62px;
+  right: -45px;
+}
+
+
+/*INPUTS FOR THE SUGGESTIONS*/
+
+th, td {
+	/* padding: 15px; */
+	/*text-align: left;*/
+	border: 1px solid black;
+}
+
+
+.guest_form{
+
+	width: 90%;
+  	display: block;
+  	margin: 0 auto;
+
+	text-align: center;
+
+}
+
+#write_suggestion_div {
+	width: 100%;
+}
+
+/*HANDLING FORMAT FOR THE QUEUE TABLE*/
+
+.suggestion_box{
+	width: 90%;
+  	display: block;
+  	margin: 0 auto;
+
+	text-align: center;
+}
+
+
+#song_div {
+	overflow: auto;
+}
+
+#song_table{
+	/*width:100%;*/
+	/*padding: 10px;*/
+}
+#song_table th, td{
+	/*padding: 10px;*/
+	text-align: left;
+	border: 1px solid black;
+}
+
+#song_table {
+	/*width: 100%;*/
+	/*padding: 10px;*/
+}
+
+
+/*MUSIC PLAYER FORMATTING*/
+
+.music_player{
+	width: 90%;
+  	display: block;
+  	margin: 0 auto;
+
+	text-align: center;
+}
+
+
+
+
+/*OTHER STYLING FORMATS*/
+
+button{
+
+	background-color: black;
+	color: white;
+	text-align: center;
+	border-radius: 12px;
+	font-size: 20px;
+	padding-right: 5px;
+
+}
+
+

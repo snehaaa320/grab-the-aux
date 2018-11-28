@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
+    <script type="text/javascript" src="spotify-web-api-js.js"></script>
+    <script type="text/javascript" src="choose_playlist.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Choose Playlist</title>
+</head>
+
+<body>
+    <script>
+    getUserPlaylists();
+    </script>
+    <div class="top_content">
+        <div>
+            <h1 id="heading" class="headTitle">Welcome, <br> [HOST NAME]</h1>
+        </div>
+    </div>
+    <div class="create_playlist">
+        <p><button onclick="create()">Create a Playlist ➕</button></p>
+    </div>
+    <div class="choose_playlist">
+        <h2 class="headTitle">Recently Played</h2>
+        <p>Here are your 6 most recently made playlists. Choose one to start your session!</p>
+        <table>
+            <tr>
+                <div class="album_cover" id="image0"></div>
+            </tr>
+            <tr>
+                <a href="#" class="album_name" onclick="choosePlaylists(0)">
+                        <div id="playlist0"> </div>
+                        <br>
+                    </a>
+            </tr>
+
+            <tr>
+                <div class="album_cover" id="image1"></div>
+            </tr>
+            <tr>
+                <a href="#" class="album_name" onclick="choosePlaylists(1)">
+                        <div id="playlist1"> </div>
+                        <br>
+                    </a>
+            </tr>
+
+            <tr>
+                <div class="album_cover" id="image2"></div>
+            </tr>
+            <tr>
+                <a href="#" class="album_name" onclick="choosePlaylists(2)">
+                        <div id="playlist2"> </div>
+                        <br>
+                    </a>
+            </tr>
+
+            <tr>
+                <div class="album_cover" id="image3"></div>
+            </tr>
+            <tr>
+                <a href="#" class="album_name" onclick="choosePlaylists(3)">
+                        <div id="playlist3"> </div>
+                        <br>
+                    </a>
+            </tr>
+
+            <tr>
+                <div class="album_cover" id="image4"></div>
+            </tr>
+            <tr>
+                <a href="#" class="album_name" onclick="choosePlaylists(4)">
+                        <div id="playlist4"> </div>
+                        <br>
+                    </a>
+            </tr>
+
+            <tr>
+                <div class="album_cover" id="image5"></div>
+            </tr>
+            <tr>
+                <a href="#" class="album_name" onclick="choosePlaylists(5)">
+                        <div id="playlist5"> </div>
+                        <br>
+                    </a>
+            </tr>
+
+
+
+
+
+        </table>
+    </div>
+</body>
+
+</html>
